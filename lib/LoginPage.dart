@@ -7,7 +7,11 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LinearGradient linearGradient = const LinearGradient(
-      colors: [Colors.red, Colors.blue, Colors.green],
+      colors: [
+        Color.fromARGB(255, 245, 92, 82),
+        Color.fromARGB(255, 88, 155, 209),
+        Color.fromARGB(255, 113, 212, 117),
+      ],
       begin: AlignmentDirectional.topStart,
       end: AlignmentDirectional.bottomEnd,
     );
@@ -28,7 +32,6 @@ class Login extends StatelessWidget {
                 controller: TextEditingController(text: 'E-mail/Contact'),
                 decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -47,7 +50,6 @@ class Login extends StatelessWidget {
                 controller: TextEditingController(text: 'Password'),
                 decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -66,7 +68,7 @@ class Login extends StatelessWidget {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(100, 40),
-                  backgroundColor: const Color.fromARGB(204, 47, 76, 204),
+                  backgroundColor: const Color.fromARGB(204, 95, 31, 243),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
