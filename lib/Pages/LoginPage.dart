@@ -32,7 +32,6 @@ class Login extends StatelessWidget {
                     labelText: "Email",
                     hintText: "Enter your email",
                     filled: true,
-                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -53,7 +52,6 @@ class Login extends StatelessWidget {
                     labelText: "Password",
                     hintText: "Enter your password",
                     filled: true,
-                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -70,12 +68,13 @@ class Login extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage(),)
-                ),
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const HomePage(),
+                    )),
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(100, 40),
-                  backgroundColor: const Color.fromARGB(204, 47, 76, 204),
+                  backgroundColor: const Color.fromARGB(204, 95, 31, 243),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
