@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/HomePage.dart';
 import 'package:myapp/Pages/LoginPage.dart';
@@ -35,8 +36,10 @@ class Signin extends StatelessWidget {
                 height: 30,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'Name'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: 'Name',
+                    hintText: 'Enter Your Name',
                     filled: true,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
@@ -53,8 +56,10 @@ class Signin extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'Contact'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: 'Contact',
+                    hintText: 'Enter Your Mobile No.',
                     filled: true,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
@@ -71,8 +76,10 @@ class Signin extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'E-mail'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: 'E-mail',
+                    hintText: 'Enter Your E-mail ID',
                     filled: true,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
@@ -89,8 +96,10 @@ class Signin extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'Password'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: 'Password',
+                    hintText: 'Enter Your Password',
                     filled: true,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
@@ -131,17 +140,18 @@ class Signin extends StatelessWidget {
                   children: [
                     TextSpan(
                         text: 'Login',
-                        onEnter: (event) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Login()),
-                          );
-                        },
                         style: TextStyle(
                           color: Colors.blue.shade900,
                           decoration: TextDecoration.underline,
-                        ))
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Login()),
+                            );
+                          }),
                   ],
                 ),
               ),
