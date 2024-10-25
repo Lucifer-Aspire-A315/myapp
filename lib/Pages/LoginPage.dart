@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/HomePage.dart';
 import 'package:myapp/Pages/SigninPage.dart';
@@ -8,11 +9,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     LinearGradient linearGradient = const LinearGradient(
-      colors: [
-        Color.fromARGB(255, 245, 92, 82),
-        Color.fromARGB(255, 88, 155, 209),
-        Color.fromARGB(255, 113, 212, 117),
-      ],
+      colors: [Colors.red, Colors.blue, Colors.green],
       begin: AlignmentDirectional.topStart,
       end: AlignmentDirectional.bottomEnd,
     );
@@ -30,9 +27,12 @@ class Login extends StatelessWidget {
                 height: 30,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'E-mail/Contact'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: "Email",
+                    hintText: "Enter your email",
                     filled: true,
+                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -48,9 +48,12 @@ class Login extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'Password'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: "Password",
+                    hintText: "Enter your password",
                     filled: true,
+                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -72,7 +75,7 @@ class Login extends StatelessWidget {
                 ),
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(100, 40),
-                  backgroundColor: const Color.fromARGB(204, 95, 31, 243),
+                  backgroundColor: const Color.fromARGB(204, 47, 76, 204),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -89,18 +92,19 @@ class Login extends StatelessWidget {
                   children: [
                     TextSpan(
                         text: 'Sign Up',
-                        onEnter: (event) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const Signin(),
-                            ),
-                          );
-                        },
                         style: TextStyle(
                           color: Colors.blue.shade900,
                           decoration: TextDecoration.underline,
-                        ))
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const Signin(),
+                              ),
+                            );
+                          }),
                   ],
                 ),
               ),
