@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:myapp/Pages/HomePage.dart';
 import 'package:myapp/Pages/LoginPage.dart';
 
 class Signin extends StatelessWidget {

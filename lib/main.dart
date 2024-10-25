@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Pages/SigninPage.dart';
+import 'package:myapp/Pages/HomePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,14 +13,99 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primaryColor: const Color.fromARGB(96, 24, 22, 22),
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-        useMaterial3: true,
+      home: Scaffold(
+        body: HomePage(), // Placeholder for your dashboard content
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.blueGrey[900],
+          shape: CircleBorder(),
+          elevation: 5,
+          onPressed: () {
+            // Add action for the FAB
+          },
+          child: Icon(Icons.add, color: Colors.white),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: BottomAppBar(
+          height: 65,
+          color: Colors.white,
+          shadowColor: Colors.blueAccent,
+          shape: CircularNotchedRectangle(),
+          notchMargin: 8,
+          child: Container(
+            height: 56, // Reduced height to fit content within BottomAppBar
+            padding: EdgeInsets.symmetric(
+                horizontal: 10.0), // Added padding for better spacing
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // Home Button
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      // Handle Home tap
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.home),
+                        const Text('Home', style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  ),
+                ),
+                // Customers Button
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      // Handle Customers tap
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.home),
+                        const Text('Home', style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 40), // Space for the FloatingActionButton
+                // Khata Button
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.home),
+                        const Text('Home', style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  ),
+                ),
+                // Orders Button
+                Expanded(
+                  child: GestureDetector(
+                    onTap: () {
+                      // Handle Orders tap
+                    },
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.home),
+                        const Text('Home', style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-      home: const Signin(),
     );
   }
 }
-
