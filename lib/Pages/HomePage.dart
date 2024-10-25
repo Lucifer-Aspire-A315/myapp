@@ -27,8 +27,8 @@ class _MyAppState extends State<MyApp> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              Icon(Icons.arrow_drop_down, color: Colors.black),
-              Spacer(),
+              const Icon(Icons.arrow_drop_down, color: Colors.black),
+              const Spacer(),
               // Flexible(
               //   child: Text(
               //     'BECOME INSIDER',
@@ -39,7 +39,7 @@ class _MyAppState extends State<MyApp> {
               //     overflow: TextOverflow.ellipsis,
               //   ),
               // ),
-              SizedBox(width: 10.0), // Spacing between elements
+              const SizedBox(width: 10.0), // Spacing between elements
               IconButton(
                 icon: const Icon(Icons.notifications, color: Colors.black),
                 onPressed: () {},
@@ -60,12 +60,12 @@ class _MyAppState extends State<MyApp> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child:const  Row(
+                child: const Row(
                   children: [
                     Icon(Icons.search, color: Colors.grey),
                     Expanded(
@@ -76,7 +76,8 @@ class _MyAppState extends State<MyApp> {
                         ),
                       ),
                     ),
-                    Icon(Icons.camera_alt, color: Color.fromARGB(255, 53, 48, 48)),
+                    Icon(Icons.camera_alt,
+                        color: Color.fromARGB(255, 53, 48, 48)),
                     SizedBox(width: 8.0),
                     Icon(Icons.mic, color: Colors.grey),
                   ],
@@ -89,3 +90,78 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+// import 'package:flutter/material.dart';
+// import 'package:google_fonts/google_fonts.dart';
+
+// class HomePage extends StatelessWidget {
+//   const HomePage({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       backgroundColor: Theme.of(context).canvasColor,
+//       appBar: AppBar(
+//         leading:
+//             IconButton(onPressed: () {}, icon: const Icon(Icons.menu_outlined)),
+//         title: const Text('Home Page'),
+//         backgroundColor: Colors.white60,
+//         actions: [
+//           IconButton(
+//             onPressed: () {},
+//             icon: const Icon(Icons.shopping_bag_outlined),
+//           ),
+//           IconButton(
+//             onPressed: () {},
+//             icon: const Icon(Icons.favorite_border_outlined),
+//           ),
+//           IconButton(
+//             onPressed: () {},
+//             icon: const Icon(Icons.person_2_outlined),
+//           ),
+//         ],
+//       ),
+//       body: Column(
+//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//         children: [
+//           Container(
+//             margin: const EdgeInsets.all(10),
+//             constraints:
+//                 const BoxConstraints(maxHeight: 70, maxWidth: double.infinity),
+//             decoration: BoxDecoration(
+//               color: Colors.white,
+//               borderRadius: BorderRadius.circular(10),
+//             ),
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               children: [
+//                 IconButton(
+//                   onPressed: () {},
+//                   icon: const Icon(
+//                     Icons.category_outlined,
+//                     size: 35,
+//                     color: Colors.black87,
+//                   ),
+//                 ),
+//                 Text(
+//                   'Categories',
+//                   style: TextStyle(
+//                     fontSize: 22,
+//                     fontWeight: FontWeight.w900,
+//                     fontStyle: GoogleFonts.playfairDisplayTextTheme()
+//                         .bodyMedium
+//                         ?.fontStyle,
+//                   ),
+//                 ),
+//                 IconButton(
+//                   onPressed: () {},
+//                   icon: const Icon(Icons.arrow_drop_down_outlined),
+//                 ),
+//               ],
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
