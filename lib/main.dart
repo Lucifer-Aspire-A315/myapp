@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/LoginPage.dart';
 
@@ -12,6 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primaryColor: const Color.fromARGB(96, 24, 22, 22),
@@ -35,24 +37,9 @@ class Signin extends StatelessWidget {
     );
     return Scaffold(
       body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(
-          colors: [
-            Color.fromARGB(255, 88, 155, 209),
-            Color.fromARGB(255, 113, 212, 117),
-            Color.fromARGB(255, 247, 236, 145),
-            Color.fromARGB(255, 250, 183, 82),
-            Color.fromARGB(255, 245, 92, 82),
-          ],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          stops: [0.0, 0.25, 0.5, 0.75, 1.0],
-        )),
-        // decoration: BoxDecoration(
-        //   gradient: linearGradient,
-        // ),
+        decoration: BoxDecoration(
+          gradient: linearGradient,
+        ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -61,9 +48,12 @@ class Signin extends StatelessWidget {
                 height: 30,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'Name'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: "Name",
+                    hintText: "Enter your name",
                     filled: true,
+                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -79,9 +69,12 @@ class Signin extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'Contact'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: "Contact",
+                    hintText: "Enter your contact number",
                     filled: true,
+                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -97,9 +90,12 @@ class Signin extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'E-mail'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: "Email",
+                    hintText: "Enter your email",
                     filled: true,
+                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -115,9 +111,12 @@ class Signin extends StatelessWidget {
                 height: 20,
               ),
               TextFormField(
-                controller: TextEditingController(text: 'Password'),
+                controller: TextEditingController(),
                 decoration: InputDecoration(
+                    labelText: "Password",
+                    hintText: "Enter your password",
                     filled: true,
+                    fillColor: Colors.blueGrey,
                     constraints: const BoxConstraints(
                       maxHeight: 50,
                       maxWidth: 300,
@@ -136,7 +135,7 @@ class Signin extends StatelessWidget {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(100, 40),
-                  backgroundColor: const Color.fromARGB(204, 95, 31, 243),
+                  backgroundColor: const Color.fromARGB(204, 47, 76, 204),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -153,17 +152,18 @@ class Signin extends StatelessWidget {
                   children: [
                     TextSpan(
                         text: 'Login',
-                        onEnter: (event) {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Login()),
-                          );
-                        },
                         style: TextStyle(
                           color: Colors.blue.shade900,
                           decoration: TextDecoration.underline,
-                        ))
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const Login()),
+                            );
+                          }),
                   ],
                 ),
               ),
