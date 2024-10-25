@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/main.dart';
+import 'package:myapp/Pages/HomePage.dart';
+import 'package:myapp/Pages/SigninPage.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -65,7 +66,10 @@ class Login extends StatelessWidget {
                 height: 30,
               ),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage(),)
+                ),
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(100, 40),
                   backgroundColor: const Color.fromARGB(204, 95, 31, 243),
