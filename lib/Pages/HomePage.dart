@@ -106,7 +106,6 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:myapp/Pages/profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -121,9 +120,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-      backgroundColor: Colors.red.shade100,
-=======
+
       backgroundColor: Theme.of(context).canvasColor,
       // backgroundColor: const Color.fromARGB(77, 196, 130, 130),
       // appBar: AppBar(
@@ -152,7 +149,6 @@ class _HomePageState extends State<HomePage> {
       //     ),
       //   ],
       // ),
->>>>>>> c1cdda29166848a9a6660d7071af2922ef030610
       body: SafeArea(
         child: Column(
           children: [
@@ -199,7 +195,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
-<<<<<<< HEAD
             // Display search bar if _isSearching is true
             if (_isSearching)
               Padding(
@@ -214,8 +209,6 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-            ProfileComponent()
-=======
             const SizedBox(
               height: 10,
             ),
@@ -248,7 +241,6 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             )
->>>>>>> c1cdda29166848a9a6660d7071af2922ef030610
           ],
         ),
       ),
