@@ -36,10 +36,10 @@ class MyApp extends StatelessWidget {
           // shadowColor: Colors.blueAccent,
           shape: const CircularNotchedRectangle(),
           notchMargin: 8,
-          child: Container(
+          child: SizedBox(
             height: 56, // Reduced height to fit content within BottomAppBar
-            padding: const EdgeInsets.symmetric(
-                horizontal: 10.0), // Added padding for better spacing
+            // padding: const EdgeInsets.symmetric(
+            //     horizontal: 10.0), // Added padding for better spacing
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
