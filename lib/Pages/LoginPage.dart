@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/HomePage.dart';
 import 'package:myapp/Pages/SigninPage.dart';
+import 'package:myapp/main.dart';
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -70,7 +71,7 @@ class Login extends StatelessWidget {
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => HomePage(),
+                      builder: (context) => MyApp(),
                     )),
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(100, 40),

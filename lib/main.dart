@@ -14,26 +14,26 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        body: HomePage(), // Placeholder for your dashboard content
+        body: const HomePage(), // Placeholder for your dashboard content
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.blueGrey[900],
-          shape: CircleBorder(),
+          shape: const CircleBorder(),
           elevation: 5,
           onPressed: () {
             // Add action for the FAB
           },
-          child: Icon(Icons.add, color: Colors.white),
+          child: const Icon(Icons.add, color: Colors.white),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
           height: 65,
           color: Colors.white,
           shadowColor: Colors.blueAccent,
-          shape: CircularNotchedRectangle(),
+          shape: const CircularNotchedRectangle(),
           notchMargin: 8,
           child: Container(
             height: 56, // Reduced height to fit content within BottomAppBar
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
                 horizontal: 10.0), // Added padding for better spacing
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -44,12 +44,12 @@ class MyApp extends StatelessWidget {
                     onTap: () {
                       // Handle Home tap
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.home),
-                        const Text('Home', style: TextStyle(fontSize: 12)),
+                        Text('Home', style: TextStyle(fontSize: 12)),
                       ],
                     ),
                   ),
@@ -60,27 +60,27 @@ class MyApp extends StatelessWidget {
                     onTap: () {
                       // Handle Customers tap
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.home),
-                        const Text('Home', style: TextStyle(fontSize: 12)),
+                        Text('Home', style: TextStyle(fontSize: 12)),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(width: 40), // Space for the FloatingActionButton
+                const SizedBox(width: 40), // Space for the FloatingActionButton
                 // Khata Button
                 Expanded(
                   child: GestureDetector(
                     onTap: () {},
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.home),
-                        const Text('Home', style: TextStyle(fontSize: 12)),
+                        Text('Home', style: TextStyle(fontSize: 12)),
                       ],
                     ),
                   ),
@@ -91,12 +91,12 @@ class MyApp extends StatelessWidget {
                     onTap: () {
                       // Handle Orders tap
                     },
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.home),
-                        const Text('Home', style: TextStyle(fontSize: 12)),
+                        Text('Home', style: TextStyle(fontSize: 12)),
                       ],
                     ),
                   ),
