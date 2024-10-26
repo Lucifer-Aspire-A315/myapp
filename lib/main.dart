@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/HomePage.dart';
 import 'package:myapp/Pages/LoginPage.dart';
+import 'package:myapp/Pages/SigninPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -114,7 +115,12 @@ class _MyAppState extends State<MyApp> {
                     Expanded(
                       child: GestureDetector(
                         onTap: () {
-                          // Handle Orders tap
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Signin(),
+                            ),
+                          );
                         },
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
