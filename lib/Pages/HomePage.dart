@@ -106,6 +106,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -120,7 +121,6 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Theme.of(context).canvasColor,
       // backgroundColor: const Color.fromARGB(77, 196, 130, 130),
       // appBar: AppBar(
@@ -212,35 +212,76 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(
               height: 10,
             ),
-            Container(
-              height: 250,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        size: 40,
-                      )),
-                  Container(
-                    height: 250,
-                    width: 250,
-                    child: Center(
-                      child: Image.asset(
-                        'assets/images/person1.png',
-                      ),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      size: 40,
+                    )),
+                Center(
+                  child: CircleAvatar(
+                    radius: 120,
+                    child: Image.asset(
+                      'assets/images/person1.png',
                     ),
                   ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 40,
-                      )),
-                ],
-              ),
-            )
+                ),
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.arrow_forward_ios,
+                      size: 40,
+                    )),
+              ],
+            ),
+
+            Row(
+              children: [
+                Container(
+                  margin: EdgeInsets.only(left: 15),
+                  width: 150,
+                  child: Text(
+                    'New Arrival',
+                    style: TextStyle(
+                      color: Colors.red.shade300,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                      fontFamily: GoogleFonts.rampartOneTextTheme()
+                          .bodyLarge
+                          ?.fontFamily,
+                    ),
+                  ),
+                ),
+                Container(
+                  child: Row(
+                    children: [
+                      CircleAvatar(
+                        radius: 35,
+                        child: Image.asset(
+                          'assets/images/person1.png',
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: 35,
+                        child: Image.asset(
+                          'assets/images/person1.png',
+                        ),
+                      ),
+                      CircleAvatar(
+                        radius: 35,
+                        child: Image.asset(
+                          'assets/images/person1.png',
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ],
         ),
       ),
