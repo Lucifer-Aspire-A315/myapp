@@ -103,69 +103,82 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.red.shade100,
       // backgroundColor: const Color.fromARGB(77, 196, 130, 130),
-      appBar: AppBar(
-        leading:
-            IconButton(onPressed: () {}, icon: const Icon(Icons.menu_outlined)),
-        title: const Text('Home Page'),
-        backgroundColor: Colors.white60,
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SearchPage(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.shopping_bag_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_border_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.person_2_outlined),
-          ),
-        ],
-      ),
+      // appBar: AppBar(
+      //   leading: IconButton(onPressed: () {}, icon: const Icon(Icons.widgets_outlined)),
+      //   title: const Text('Home Page'),
+      //   backgroundColor: Colors.white60,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => const SearchPage(),
+      //           ),
+      //         );
+      //       },
+      //       icon: const Icon(Icons.shopping_bag_outlined),
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.favorite_border_outlined),
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.person_2_outlined),
+      //     ),
+      //   ],
+      // ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            margin: const EdgeInsets.all(10),
+            margin: const EdgeInsets.only(top: 25),
             constraints:
                 const BoxConstraints(maxHeight: 70, maxWidth: double.infinity),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-            ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   onPressed: () {},
                   icon: const Icon(
-                    Icons.category_outlined,
-                    size: 35,
-                    color: Colors.black87,
+                    Icons.widgets_outlined,
+                    size: 30,
+                    color: Colors.black,
                   ),
                 ),
-                Text(
-                  'Categories',
-                  style: TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.w900,
-                    fontStyle: GoogleFonts.playfairDisplayTextTheme()
-                        .bodyMedium
-                        ?.fontStyle,
-                  ),
-                ),
+                // Text(
+                //   'Categories',
+                //   style: TextStyle(
+                //     fontSize: 22,
+                //     fontWeight: FontWeight.w900,
+                //     fontStyle: GoogleFonts.playfairDisplayTextTheme()
+                //         .bodyMedium
+                //         ?.fontStyle,
+                //   ),
+                // ),
+                const Spacer(),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.arrow_drop_down_outlined),
+                  icon: const Icon(
+                    Icons.qr_code_scanner_outlined,
+                    size: 30,
+                    color: Colors.black,
+                  ),
                 ),
+                const SizedBox(
+                  width: 20,
+                ),
+                CircleAvatar(
+                  child: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.search,
+                        color: Colors.black,
+                        size: 30,
+                      )),
+                ),
+                const SizedBox(
+                  width: 15,
+                )
               ],
             ),
           ),
