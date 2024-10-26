@@ -93,6 +93,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/Pages/SearchPage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -100,7 +101,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(77, 196, 130, 130),
+      backgroundColor: Colors.red.shade100,
+      // backgroundColor: const Color.fromARGB(77, 196, 130, 130),
       appBar: AppBar(
         leading:
             IconButton(onPressed: () {}, icon: const Icon(Icons.menu_outlined)),
@@ -108,7 +110,14 @@ class HomePage extends StatelessWidget {
         backgroundColor: Colors.white60,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const SearchPage(),
+                ),
+              );
+            },
             icon: const Icon(Icons.shopping_bag_outlined),
           ),
           IconButton(

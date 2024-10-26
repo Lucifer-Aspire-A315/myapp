@@ -71,7 +71,7 @@ class Login extends StatelessWidget {
                 onPressed: () => Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MyApp(),
+                      builder: (context) => const MyApp(),
                     )),
                 style: ElevatedButton.styleFrom(
                   fixedSize: const Size(100, 40),
