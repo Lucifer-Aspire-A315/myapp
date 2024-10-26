@@ -7,37 +7,39 @@ class SearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.red.shade100,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white60,
-        title: const Text('Search Page'),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const SearchPage(),
-                ),
-              );
-            },
-            icon: const Icon(Icons.shopping_bag_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.favorite_border_outlined),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.person_2_outlined),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   backgroundColor: Colors.white60,
+      //   title: const Text('Search Page'),
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => const SearchPage(),
+      //           ),
+      //         );
+      //       },
+      //       icon: const Icon(Icons.shopping_bag_outlined),
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.favorite_border_outlined),
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.person_2_outlined),
+      //     ),
+      //   ],
+      // ),
+      body: SafeArea(
         child: Column(
           children: [
-            Container(
+            Padding(
+              padding: const EdgeInsets.all(10) ,
+            
+            child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -60,6 +62,7 @@ class SearchPage extends StatelessWidget {
                   Icon(Icons.mic, color: Colors.grey),
                 ],
               ),
+            ),
             ),
           ],
         ),

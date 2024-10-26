@@ -92,7 +92,6 @@
 // }
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:myapp/Pages/SearchPage.dart';
 
 class HomePage extends StatelessWidget {
@@ -129,60 +128,71 @@ class HomePage extends StatelessWidget {
       //     ),
       //   ],
       // ),
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 25),
-            constraints:
-                const BoxConstraints(maxHeight: 70, maxWidth: double.infinity),
-            child: Row(
-              children: [
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.widgets_outlined,
-                    size: 30,
-                    color: Colors.black,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              // margin: const EdgeInsets.only(top: 25),
+              constraints: const BoxConstraints(
+                  maxHeight: 70, maxWidth: double.infinity),
+              child: Row(
+                children: [
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.widgets_outlined,
+                      size: 30,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                // Text(
-                //   'Categories',
-                //   style: TextStyle(
-                //     fontSize: 22,
-                //     fontWeight: FontWeight.w900,
-                //     fontStyle: GoogleFonts.playfairDisplayTextTheme()
-                //         .bodyMedium
-                //         ?.fontStyle,
-                //   ),
-                // ),
-                const Spacer(),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
-                    Icons.qr_code_scanner_outlined,
-                    size: 30,
-                    color: Colors.black,
+                  // Text(
+                  //   'Categories',
+                  //   style: TextStyle(
+                  //     fontSize: 22,
+                  //     fontWeight: FontWeight.w900,
+                  //     fontStyle: GoogleFonts.playfairDisplayTextTheme()
+                  //         .bodyMedium
+                  //         ?.fontStyle,
+                  //   ),
+                  // ),
+                  const Spacer(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.qr_code_scanner_outlined,
+                      size: 30,
+                      color: Colors.black,
+                    ),
                   ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                CircleAvatar(
-                  child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.search,
-                        color: Colors.black,
-                        size: 30,
-                      )),
-                ),
-                const SizedBox(
-                  width: 15,
-                )
-              ],
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  CircleAvatar(
+                    child: Center(
+                      child: IconButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SearchPage(),
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.search,
+                            color: Colors.black,
+                            size: 30,
+                          )),
+                    ),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
