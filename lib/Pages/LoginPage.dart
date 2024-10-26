@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:myapp/Pages/SigninPage.dart';
 import 'package:myapp/main.dart';
 
-class Login extends StatelessWidget {
+class Login extends StatefulWidget {
   const Login({super.key});
 
+  @override
+  State<Login> createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     LinearGradient linearGradient = const LinearGradient(

@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/HomePage.dart';
+import 'package:myapp/Pages/LoginPage.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -33,95 +39,100 @@ class MyApp extends StatelessWidget {
         bottomNavigationBar: BottomAppBar(
           height: 65,
           color: Colors.red.shade200,
-          // shadowColor: Colors.blueAccent,
           shape: const CircularNotchedRectangle(),
           notchMargin: 8,
-          child: SizedBox(
-            height: 56, // Reduced height to fit content within BottomAppBar
-            // padding: const EdgeInsets.symmetric(
-            //     horizontal: 10.0), // Added padding for better spacing
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // Home Button
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle Home tap
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/heart.png',
-                          width: 24,
-                          height: 24,
+          child: Builder(
+            builder: (BuildContext context) {
+              // New Builder to provide a proper context
+              return SizedBox(
+                height: 56,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          // Handle Home tap
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/heart.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            const Text('Liked', style: TextStyle(fontSize: 12)),
+                          ],
                         ),
-                        const Text('Liked', style: TextStyle(fontSize: 12)),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                // Customers Button
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/message.png',
-                          width: 24,
-                          height: 24,
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Login(),
+                            ),
+                          );
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/message.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            Text('Message', style: TextStyle(fontSize: 12)),
+                          ],
                         ),
-                        Text('Message', style: TextStyle(fontSize: 12)),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                const SizedBox(width: 40), // Space for the FloatingActionButton
-                // Khata Button
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {},
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/bag.png',
-                          width: 24,
-                          height: 24,
+                    const SizedBox(width: 40),
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/bag.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            Text('Orders', style: TextStyle(fontSize: 12)),
+                          ],
                         ),
-                        Text('Orders', style: TextStyle(fontSize: 12)),
-                      ],
+                      ),
                     ),
-                  ),
-                ),
-                // Orders Button
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () {
-                      // Handle Orders tap
-                    },
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/user.png',
-                          width: 24,
-                          height: 24,
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () {
+                          // Handle Orders tap
+                        },
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/user.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            Text('Profile', style: TextStyle(fontSize: 12)),
+                          ],
                         ),
-                        Text('Profile', style: TextStyle(fontSize: 12)),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
         ),
       ),
