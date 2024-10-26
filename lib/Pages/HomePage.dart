@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.red.shade100,
+      backgroundColor: Theme.of(context).canvasColor,
       // backgroundColor: const Color.fromARGB(77, 196, 130, 130),
       // appBar: AppBar(
       //   leading: IconButton(onPressed: () {}, icon: const Icon(Icons.widgets_outlined)),
@@ -191,6 +191,38 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 250,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        size: 40,
+                      )),
+                  Container(
+                    height: 250,
+                    width: 250,
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/person1.png',
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 40,
+                      )),
+                ],
+              ),
+            )
           ],
         ),
       ),

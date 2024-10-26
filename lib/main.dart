@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(canvasColor: const Color.fromARGB(255, 231, 223, 223)),
       home: Scaffold(
         backgroundColor: Colors.red.shade100,
         body: const HomePage(), // Placeholder for your dashboard content

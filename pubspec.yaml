@@ -66,6 +66,9 @@ flutter:
     - assets/images/home-page.png
     - assets/images/message.png
     - assets/images/user.png
+    - assets/images/person1.png
+    - assets/images/person2.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
