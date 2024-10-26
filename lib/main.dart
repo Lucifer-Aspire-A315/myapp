@@ -29,9 +29,10 @@ class MyApp extends StatelessWidget {
           height: 65,
           color: Colors.white,
           shadowColor: Colors.blueAccent,
-          shape: const CircularNotchedRectangle(),
+          shape:  const CircularNotchedRectangle(),
           notchMargin: 8,
           child: Container(
+            
             height: 56, // Reduced height to fit content within BottomAppBar
             padding: const EdgeInsets.symmetric(
                 horizontal: 10.0), // Added padding for better spacing
@@ -64,8 +65,8 @@ class MyApp extends StatelessWidget {
                       mainAxisSize: MainAxisSize.min,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.home),
-                        Text('Home', style: TextStyle(fontSize: 12)),
+                        Icon(Icons.search_outlined),
+                        Text('Search', style: TextStyle(fontSize: 12)),
                       ],
                     ),
                   ),

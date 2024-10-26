@@ -100,7 +100,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).canvasColor,
+      backgroundColor: const Color.fromARGB(77, 196, 130, 130),
       appBar: AppBar(
         leading:
             IconButton(onPressed: () {}, icon: const Icon(Icons.menu_outlined)),
