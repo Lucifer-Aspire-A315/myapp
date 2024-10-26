@@ -121,7 +121,38 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+<<<<<<< HEAD
       backgroundColor: Colors.red.shade100,
+=======
+      backgroundColor: Theme.of(context).canvasColor,
+      // backgroundColor: const Color.fromARGB(77, 196, 130, 130),
+      // appBar: AppBar(
+      //   leading: IconButton(onPressed: () {}, icon: const Icon(Icons.widgets_outlined)),
+      //   title: const Text('Home Page'),
+      //   backgroundColor: Colors.white60,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         Navigator.push(
+      //           context,
+      //           MaterialPageRoute(
+      //             builder: (context) => const SearchPage(),
+      //           ),
+      //         );
+      //       },
+      //       icon: const Icon(Icons.shopping_bag_outlined),
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.favorite_border_outlined),
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.person_2_outlined),
+      //     ),
+      //   ],
+      // ),
+>>>>>>> c1cdda29166848a9a6660d7071af2922ef030610
       body: SafeArea(
         child: Column(
           children: [
@@ -168,6 +199,7 @@ class _HomePageState extends State<HomePage> {
                 ],
               ),
             ),
+<<<<<<< HEAD
             // Display search bar if _isSearching is true
             if (_isSearching)
               Padding(
@@ -183,6 +215,40 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ProfileComponent()
+=======
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              height: 250,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        size: 40,
+                      )),
+                  Container(
+                    height: 250,
+                    width: 250,
+                    child: Center(
+                      child: Image.asset(
+                        'assets/images/person1.png',
+                      ),
+                    ),
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 40,
+                      )),
+                ],
+              ),
+            )
+>>>>>>> c1cdda29166848a9a6660d7071af2922ef030610
           ],
         ),
       ),
