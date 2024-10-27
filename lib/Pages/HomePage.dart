@@ -210,9 +210,6 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-              const SizedBox(
-                height: 5,
-              ),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -223,11 +220,29 @@ class _HomePageState extends State<HomePage> {
                         Icons.arrow_back_ios,
                         size: 40,
                       )),
-                  const Center(
-                    child: CircleAvatar(
-                      foregroundImage: AssetImage('assets/images/person1.png'),
-                      backgroundColor: Colors.blueGrey,
-                      radius: 120,
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.38,
+                    width: MediaQuery.of(context).size.width * 0.63,
+                    child: PageView(
+                      scrollDirection: Axis.horizontal,
+                      children: const [
+                        Center(
+                          child: CircleAvatar(
+                            radius: 120,
+                            foregroundImage:
+                                AssetImage('assets/images/person1.png'),
+                            backgroundColor: Colors.blueGrey,
+                          ),
+                        ),
+                        Center(
+                          child: CircleAvatar(
+                            radius: 120,
+                            foregroundImage:
+                                AssetImage('assets/images/person2.png'),
+                            backgroundColor: Colors.blueGrey,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                   IconButton(
