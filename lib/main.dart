@@ -20,9 +20,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(canvasColor: const Color.fromARGB(255, 231, 223, 223)),
+      theme: ThemeData(canvasColor: Colors.yellow.shade50),
       home: Scaffold(
-        backgroundColor: Colors.red.shade100,
+        backgroundColor: Theme.of(context).canvasColor,
         body: const HomePage(), // Placeholder for your dashboard content
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color.fromARGB(255, 240, 240, 96),
@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: BottomAppBar(
           height: 65,
-          color: Colors.red.shade200,
+          color: Colors.yellow.shade700,
           shape: const CircularNotchedRectangle(),
           notchMargin: 8,
           child: Builder(
@@ -89,7 +89,8 @@ class _MyAppState extends State<MyApp> {
                               width: 24,
                               height: 24,
                             ),
-                            const Text('Message', style: TextStyle(fontSize: 12)),
+                            const Text('Message',
+                                style: TextStyle(fontSize: 12)),
                           ],
                         ),
                       ),
@@ -107,7 +108,8 @@ class _MyAppState extends State<MyApp> {
                               width: 24,
                               height: 24,
                             ),
-                            const Text('Orders', style: TextStyle(fontSize: 12)),
+                            const Text('Orders',
+                                style: TextStyle(fontSize: 12)),
                           ],
                         ),
                       ),
@@ -131,7 +133,8 @@ class _MyAppState extends State<MyApp> {
                               width: 24,
                               height: 24,
                             ),
-                            const Text('Profile', style: TextStyle(fontSize: 12)),
+                            const Text('Profile',
+                                style: TextStyle(fontSize: 12)),
                           ],
                         ),
                       ),

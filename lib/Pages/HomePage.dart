@@ -211,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               const SizedBox(
-                height: 10,
+                height: 5,
               ),
 
               Row(
@@ -223,12 +223,11 @@ class _HomePageState extends State<HomePage> {
                         Icons.arrow_back_ios,
                         size: 40,
                       )),
-                  Center(
+                  const Center(
                     child: CircleAvatar(
+                      foregroundImage: AssetImage('assets/images/person1.png'),
+                      backgroundColor: Colors.blueGrey,
                       radius: 120,
-                      child: Image.asset(
-                        'assets/images/person1.png',
-                      ),
                     ),
                   ),
                   IconButton(
@@ -241,14 +240,14 @@ class _HomePageState extends State<HomePage> {
               ),
 
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    margin: const EdgeInsets.only(left: 15),
-                    width: 130,
+                  SizedBox(
+                    width: 120,
                     child: Text(
                       'New Arrival',
                       style: TextStyle(
-                        color: Colors.red.shade300,
+                        color: Colors.red.shade500,
                         fontWeight: FontWeight.bold,
                         fontSize: 32,
                         fontFamily: GoogleFonts.rampartOneTextTheme()
