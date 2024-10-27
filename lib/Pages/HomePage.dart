@@ -150,139 +150,303 @@ class _HomePageState extends State<HomePage> {
       //   ],
       // ),
       body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              constraints: const BoxConstraints(
-                  maxHeight: 70, maxWidth: double.infinity),
-              child: Row(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                constraints: const BoxConstraints(
+                    maxHeight: 70, maxWidth: double.infinity),
+                child: Row(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.widgets_outlined,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Spacer(),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.qr_code_scanner_outlined,
+                        size: 30,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const SizedBox(width: 20),
+                    CircleAvatar(
+                      child: Center(
+                        child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isSearching = !_isSearching; // Toggle search bar
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.search,
+                            color: Colors.black,
+                            size: 25,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                  ],
+                ),
+              ),
+              // Display search bar if _isSearching is true
+              if (_isSearching)
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: "Search...",
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  ),
+                ),
+              const SizedBox(
+                height: 10,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.widgets_outlined,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const Spacer(),
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.qr_code_scanner_outlined,
-                      size: 30,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(width: 20),
-                  CircleAvatar(
-                    child: Center(
-                      child: IconButton(
-                        onPressed: () {
-                          setState(() {
-                            _isSearching = !_isSearching; // Toggle search bar
-                          });
-                        },
-                        icon: const Icon(
-                          Icons.search,
-                          color: Colors.black,
-                          size: 25,
-                        ),
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        size: 40,
+                      )),
+                  Center(
+                    child: CircleAvatar(
+                      radius: 120,
+                      child: Image.asset(
+                        'assets/images/person1.png',
                       ),
                     ),
                   ),
-                  const SizedBox(width: 15),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.arrow_forward_ios,
+                        size: 40,
+                      )),
                 ],
               ),
-            ),
-            // Display search bar if _isSearching is true
-            if (_isSearching)
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  decoration: InputDecoration(
-                    hintText: "Search...",
-                    prefixIcon: const Icon(Icons.search),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+
+              Row(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 15),
+                    width: 130,
+                    child: Text(
+                      'New Arrival',
+                      style: TextStyle(
+                        color: Colors.red.shade300,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 32,
+                        fontFamily: GoogleFonts.rampartOneTextTheme()
+                            .bodyLarge
+                            ?.fontFamily,
+                      ),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.12,
+                    width: MediaQuery.of(context).size.width * 0.63,
+                    child: PageView(
+                      scrollDirection: Axis.horizontal,
+                      children: const [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor: Colors.amber,
+                              foregroundImage:
+                                  AssetImage('assets/images/person1.png'),
+                              radius: 35,
+                            ),
+                            CircleAvatar(
+                              foregroundImage:
+                                  AssetImage('assets/images/person2.png'),
+                              radius: 35,
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.lightBlueAccent,
+                              foregroundImage:
+                                  AssetImage('assets/images/person1.png'),
+                              radius: 35,
+                            ),
+                          ],
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/person2.png'),
+                              radius: 35,
+                            ),
+                            CircleAvatar(
+                              backgroundColor: Colors.lightGreenAccent,
+                              foregroundImage:
+                                  AssetImage('assets/images/person1.png'),
+                              radius: 35,
+                            ),
+                            CircleAvatar(
+                              backgroundImage:
+                                  AssetImage('assets/images/person2.png'),
+                              radius: 35,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
               ),
-            const SizedBox(
-              height: 10,
-            ),
-
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.arrow_back_ios,
-                      size: 40,
-                    )),
-                Center(
-                  child: CircleAvatar(
-                    radius: 120,
-                    child: Image.asset(
-                      'assets/images/person1.png',
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.08,
+                width: MediaQuery.of(context).size.width,
+                child: PageView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.yellow.shade600),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'All',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.yellow.shade600),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Men',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.yellow.shade600),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Women',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.yellow.shade600),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Children',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.yellow.shade600),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Formal',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.yellow.shade600),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Casual',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {},
+                          style: ButtonStyle(
+                            backgroundColor:
+                                WidgetStatePropertyAll(Colors.yellow.shade600),
+                            shape: WidgetStatePropertyAll(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                          ),
+                          child: const Text(
+                            'Stylish',
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ],
+                    )
+                  ],
                 ),
-                IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.arrow_forward_ios,
-                      size: 40,
-                    )),
-              ],
-            ),
-
-            Row(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 15),
-                  width: 150,
-                  child: Text(
-                    'New Arrival',
-                    style: TextStyle(
-                      color: Colors.red.shade300,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 32,
-                      fontFamily: GoogleFonts.rampartOneTextTheme()
-                          .bodyLarge
-                          ?.fontFamily,
-                    ),
-                  ),
-                ),
-                Container(
-                  child: Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 35,
-                        child: Image.asset(
-                          'assets/images/person1.png',
-                        ),
-                      ),
-                      CircleAvatar(
-                        radius: 35,
-                        child: Image.asset(
-                          'assets/images/person1.png',
-                        ),
-                      ),
-                      CircleAvatar(
-                        radius: 35,
-                        child: Image.asset(
-                          'assets/images/person1.png',
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
