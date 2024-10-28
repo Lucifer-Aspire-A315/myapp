@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(canvasColor: Colors.yellow.shade50),
+      theme: ThemeData(canvasColor: Colors.white),
       home: Scaffold(
         backgroundColor: Theme.of(context).canvasColor,
         body: const HomePage(), // Placeholder for your dashboard content

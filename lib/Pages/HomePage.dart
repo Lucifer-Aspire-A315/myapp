@@ -1,112 +1,7 @@
-// import 'package:flutter/material.dart';
-// import 'package:myapp/Pages/SearchPage.dart';
-
-// class HomePage extends StatelessWidget {
-//   const HomePage({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.red.shade100,
-//       // backgroundColor: const Color.fromARGB(77, 196, 130, 130),
-//       // appBar: AppBar(
-//       //   leading: IconButton(onPressed: () {}, icon: const Icon(Icons.widgets_outlined)),
-//       //   title: const Text('Home Page'),
-//       //   backgroundColor: Colors.white60,
-//       //   actions: [
-//       //     IconButton(
-//       //       onPressed: () {
-//       //         Navigator.push(
-//       //           context,
-//       //           MaterialPageRoute(
-//       //             builder: (context) => const SearchPage(),
-//       //           ),
-//       //         );
-//       //       },
-//       //       icon: const Icon(Icons.shopping_bag_outlined),
-//       //     ),
-//       //     IconButton(
-//       //       onPressed: () {},
-//       //       icon: const Icon(Icons.favorite_border_outlined),
-//       //     ),
-//       //     IconButton(
-//       //       onPressed: () {},
-//       //       icon: const Icon(Icons.person_2_outlined),
-//       //     ),
-//       //   ],
-//       // ),
-//       body: SafeArea(
-//         child: Column(
-//           children: [
-//             Container(
-//               // margin: const EdgeInsets.only(top: 25),
-//               constraints: const BoxConstraints(
-//                   maxHeight: 70, maxWidth: double.infinity),
-//               child: Row(
-//                 children: [
-//                   IconButton(
-//                     onPressed: () {},
-//                     icon: const Icon(
-//                       Icons.widgets_outlined,
-//                       size: 30,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                   // Text(
-//                   //   'Categories',
-//                   //   style: TextStyle(
-//                   //     fontSize: 22,
-//                   //     fontWeight: FontWeight.w900,
-//                   //     fontStyle: GoogleFonts.playfairDisplayTextTheme()
-//                   //         .bodyMedium
-//                   //         ?.fontStyle,
-//                   //   ),
-//                   // ),
-//                   const Spacer(),
-//                   IconButton(
-//                     onPressed: () {},
-//                     icon: const Icon(
-//                       Icons.qr_code_scanner_outlined,
-//                       size: 30,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     width: 20,
-//                   ),
-//                   CircleAvatar(
-//                     child: Center(
-//                       child: IconButton(
-//                           onPressed: () {
-//                             Navigator.push(
-//                               context,
-//                               MaterialPageRoute(
-//                                 builder: (context) => const SearchPage(),
-//                               ),
-//                             );
-//                           },
-//                           icon: const Icon(
-//                             Icons.search,
-//                             color: Colors.black,
-//                             size: 30,
-//                           )),
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     width: 15,
-//                   )
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:myapp/cards/men.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -117,38 +12,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool _isSearching = false; // Variable to control search bar visibility
+  final PageController _pageController = PageController();
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-      // backgroundColor: const Color.fromARGB(77, 196, 130, 130),
-      // appBar: AppBar(
-      //   leading: IconButton(onPressed: () {}, icon: const Icon(Icons.widgets_outlined)),
-      //   title: const Text('Home Page'),
-      //   backgroundColor: Colors.white60,
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {
-      //         Navigator.push(
-      //           context,
-      //           MaterialPageRoute(
-      //             builder: (context) => const SearchPage(),
-      //           ),
-      //         );
-      //       },
-      //       icon: const Icon(Icons.shopping_bag_outlined),
-      //     ),
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.favorite_border_outlined),
-      //     ),
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.person_2_outlined),
-      //     ),
-      //   ],
-      // ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -196,7 +71,6 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
               ),
-              // Display search bar if _isSearching is true
               if (_isSearching)
                 Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -210,50 +84,54 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        size: 40,
-                      )),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.38,
-                    width: MediaQuery.of(context).size.width * 0.63,
-                    child: PageView(
-                      scrollDirection: Axis.horizontal,
-                      children: const [
-                        Center(
-                          child: CircleAvatar(
-                            radius: 120,
-                            foregroundImage:
-                                AssetImage('assets/images/person1.png'),
-                            backgroundColor: Colors.blueGrey,
-                          ),
-                        ),
-                        Center(
-                          child: CircleAvatar(
-                            radius: 120,
-                            foregroundImage:
-                                AssetImage('assets/images/person2.png'),
-                            backgroundColor: Colors.blueGrey,
-                          ),
-                        ),
-                      ],
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.38,
+                width: MediaQuery.of(context).size.width * 0.63,
+                child: PageView(
+                  controller: _pageController,
+                  scrollDirection: Axis.horizontal,
+                  children: const [
+                    Center(
+                      child: CircleAvatar(
+                        radius: 120,
+                        foregroundImage:
+                            AssetImage('assets/images/second (1).jpg'),
+                        backgroundColor: Colors.blueGrey,
+                      ),
                     ),
-                  ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 40,
-                      )),
-                ],
+                    Center(
+                      child: CircleAvatar(
+                        radius: 120,
+                        foregroundImage:
+                            AssetImage('assets/images/second (2).jpg'),
+                        backgroundColor: Colors.blueGrey,
+                      ),
+                    ),
+                    Center(
+                      child: CircleAvatar(
+                        radius: 120,
+                        foregroundImage:
+                            AssetImage('assets/images/second (3).jpg'),
+                        backgroundColor: Colors.blueGrey,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-
+              // const SizedBox(height: 10), // Space between PageView and indicator
+              SmoothPageIndicator(
+                controller: _pageController,
+                count: 3, // Number of pages
+                effect: ExpandingDotsEffect(
+                  dotHeight: 8,
+                  dotWidth: 8,
+                  activeDotColor: Colors.blueGrey,
+                  dotColor: Colors.grey,
+                ),
+              ),
+              const SizedBox(
+                  height:
+                      20), // Space between indicators and New Arrival section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -325,9 +203,7 @@ class _HomePageState extends State<HomePage> {
                   )
                 ],
               ),
-              const SizedBox(
-                height: 15,
-              ),
+              const SizedBox(height: 15),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.08,
                 width: MediaQuery.of(context).size.width,
@@ -340,25 +216,9 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.yellow.shade600),
-                            shape: WidgetStatePropertyAll(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                          ),
-                          child: const Text(
-                            'All',
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.yellow.shade600),
-                            shape: WidgetStatePropertyAll(
+                            backgroundColor: WidgetStateProperty.all(
+                                Colors.yellow.shade600),
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -372,9 +232,9 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.yellow.shade600),
-                            shape: WidgetStatePropertyAll(
+                            backgroundColor: WidgetStateProperty.all(
+                                Colors.yellow.shade600),
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -388,9 +248,9 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.yellow.shade600),
-                            shape: WidgetStatePropertyAll(
+                            backgroundColor: WidgetStateProperty.all(
+                                Colors.yellow.shade600),
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -409,9 +269,9 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.yellow.shade600),
-                            shape: WidgetStatePropertyAll(
+                            backgroundColor: WidgetStateProperty.all(
+                                Colors.yellow.shade600),
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -425,9 +285,9 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.yellow.shade600),
-                            shape: WidgetStatePropertyAll(
+                            backgroundColor: WidgetStateProperty.all(
+                                Colors.yellow.shade600),
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -441,9 +301,9 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor:
-                                WidgetStatePropertyAll(Colors.yellow.shade600),
-                            shape: WidgetStatePropertyAll(
+                            backgroundColor: WidgetStateProperty.all(
+                                Colors.yellow.shade600),
+                            shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -455,10 +315,42 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ],
                 ),
-              )
+              ),
+              ListView(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+        children: const [
+          ProductCard(
+            imagePath: 'assets/images/person1.png',
+            title: 'Stylish hat and beige jacket',
+            price: '\$19.99',
+            rating: 4.8,
+            ratingCount: 32,
+            isLocked: true,
+          ),
+          ProductCard(
+            imagePath: 'assets/images/person2.png',
+            title: 'Casual jacket with hoodie',
+            price: '\$25.50',
+            rating: 4.5,
+            ratingCount: 28,
+            isLocked: false,
+          ),
+          ProductCard(
+            imagePath: 'assets/images/person1.png',
+            title: 'Classic black leather jacket',
+            price: '\$99.99',
+            rating: 4.9,
+            ratingCount: 120,
+            isLocked: true,
+          ),
+          // Add more ProductCard instances as needed
+        ],
+      ),
+    
             ],
           ),
         ),
