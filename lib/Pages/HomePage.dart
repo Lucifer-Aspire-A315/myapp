@@ -13,75 +13,148 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   bool _isSearching = false; // Variable to control search bar visibility
   final PageController _pageController = PageController();
+   final TextEditingController _searchController = TextEditingController();
+   final List<Map<String, dynamic>> products = [
+    {
+      'imagePath': 'assets/images/person1.png',
+      'title': 'Stylish hat and beige jacket',
+      'price': '\$19.99',
+      'rating': 4.8,
+      'ratingCount': 32,
+      'isLocked': true,
+    },
+    {
+      'imagePath': 'assets/images/person2.png',
+      'title': 'Casual jacket with hoodie',
+      'price': '\$25.50',
+      'rating': 4.5,
+      'ratingCount': 28,
+      'isLocked': false,
+    },
+    {
+      'imagePath': 'assets/images/person1.png',
+      'title': 'Classic black leather jacket',
+      'price': '\$99.99',
+      'rating': 4.9,
+      'ratingCount': 120,
+      'isLocked': true,
+    },
+     {
+      'imagePath': 'assets/images/person1.png',
+      'title': 'Classic black leather jacket',
+      'price': '\$9.99',
+      'rating': 4.9,
+      'ratingCount': 120,
+      'isLocked': true,
+    },
+    // Add more products as needed
+  ];
+
+   List<Map<String, dynamic>> filteredProducts = [];
+
+   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     filteredProducts = products; 
+  }
 
   @override
   void dispose() {
     _pageController.dispose();
     super.dispose();
+    _searchController.dispose();
+    
+  }
+
+   void _filterProducts(String keyword) {
+    setState(() {
+      filteredProducts = products
+          .where((product) =>
+              product['title'].toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).canvasColor,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                constraints: const BoxConstraints(
-                    maxHeight: 70, maxWidth: double.infinity),
-                child: Row(
-                  children: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.widgets_outlined,
-                        size: 30,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const Spacer(),
-                    IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.qr_code_scanner_outlined,
-                        size: 30,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const SizedBox(width: 20),
-                    CircleAvatar(
-                      child: Center(
-                        child: IconButton(
+      body:  GestureDetector(
+        onTap: () {
+          if (_isSearching) {
+            setState(() {
+              _isSearching = false;
+               _searchController.clear();
+              filteredProducts = products;
+            });
+          }
+        },
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  constraints: const BoxConstraints(
+                      maxHeight: 70, maxWidth: double.infinity),
+                  padding: const EdgeInsets.symmetric(horizontal: 0),
+                  child: Row(
+                    children: [
+                      if (!_isSearching) ...[
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.widgets_outlined,
+                            size: 30,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.qr_code_scanner_outlined,
+                            size: 30,
+                            color: Colors.black,
+                          ),
+                        ),
+                        
+                        const SizedBox(width: 10),
+                        IconButton(
                           onPressed: () {
                             setState(() {
-                              _isSearching = !_isSearching; // Toggle search bar
+                              _isSearching = true;
                             });
                           },
                           icon: const Icon(
                             Icons.search,
                             color: Colors.black,
-                            size: 25,
+                            size: 30,
                           ),
                         ),
-                      ),
-                    ),
-                    const SizedBox(width: 15),
-                  ],
-                ),
-              ),
-              if (_isSearching)
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: "Search...",
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                        const SizedBox(width: 10),
+                      ],
+                      if (_isSearching)
+                        Expanded(
+                          child: Padding(
+                            padding:  EdgeInsets.only(top: 20,right: 15,left: 15),
+                            child: TextField(
+                              controller: _searchController,
+                              decoration: InputDecoration(
+                                hintText: "Search...",
+                                suffixIcon: IconButton(icon: const Icon(Icons.search), onPressed: () => {_filterProducts(_searchController.text)},),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                              onTap: () => setState(() {
+                                _isSearching = true;
+                              }),
+                              // onChanged: (value) => _filterProducts(value),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               SizedBox(
@@ -92,39 +165,47 @@ class _HomePageState extends State<HomePage> {
                   scrollDirection: Axis.horizontal,
                   children: const [
                     Center(
-                      child: CircleAvatar(
-                        radius: 120,
-                        foregroundImage:
-                            AssetImage('assets/images/second (1).jpg'),
-                        backgroundColor: Colors.blueGrey,
+                      child: ClipOval(
+                        child: Image(
+                          image: AssetImage('assets/images/second (1).jpg'),
+                          width: 240, // Set diameter of the circle
+                          height: 240,
+                          fit: BoxFit
+                              .cover, // Ensures the image fits the circle fully
+                        ),
                       ),
                     ),
                     Center(
-                      child: CircleAvatar(
-                        radius: 120,
-                        foregroundImage:
-                            AssetImage('assets/images/second (2).jpg'),
-                        backgroundColor: Colors.blueGrey,
+                      child: ClipOval(
+                        child: Image(
+                          image: AssetImage('assets/images/second (2).jpg'),
+                          width: 240,
+                          height: 240,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                     Center(
-                      child: CircleAvatar(
-                        radius: 120,
-                        foregroundImage:
-                            AssetImage('assets/images/second (3).jpg'),
-                        backgroundColor: Colors.blueGrey,
+                      child: ClipOval(
+                        child: Image(
+                          image: AssetImage('assets/images/second (3).jpg'),
+                          width: 240,
+                          height: 240,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
+
               // const SizedBox(height: 10), // Space between PageView and indicator
               SmoothPageIndicator(
                 controller: _pageController,
                 count: 3, // Number of pages
-                effect: ExpandingDotsEffect(
-                  dotHeight: 8,
-                  dotWidth: 8,
+                effect: const ExpandingDotsEffect(
+                  dotHeight: 5,
+                  dotWidth: 5,
                   activeDotColor: Colors.blueGrey,
                   dotColor: Colors.grey,
                 ),
@@ -161,18 +242,18 @@ class _HomePageState extends State<HomePage> {
                             CircleAvatar(
                               backgroundColor: Colors.amber,
                               foregroundImage:
-                                  AssetImage('assets/images/person1.png'),
+                                  AssetImage('assets/images/second (1).jpg'),
                               radius: 35,
                             ),
                             CircleAvatar(
                               foregroundImage:
-                                  AssetImage('assets/images/person2.png'),
+                                  AssetImage('assets/images/second (1).jpg'),
                               radius: 35,
                             ),
                             CircleAvatar(
                               backgroundColor: Colors.lightBlueAccent,
                               foregroundImage:
-                                  AssetImage('assets/images/person1.png'),
+                                  AssetImage('assets/images/second (1).jpg'),
                               radius: 35,
                             ),
                           ],
@@ -182,18 +263,18 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             CircleAvatar(
                               backgroundImage:
-                                  AssetImage('assets/images/person2.png'),
+                                  AssetImage('assets/images/second (1).jpg'),
                               radius: 35,
                             ),
                             CircleAvatar(
                               backgroundColor: Colors.lightGreenAccent,
                               foregroundImage:
-                                  AssetImage('assets/images/person1.png'),
+                                  AssetImage('assets/images/second (1).jpg'),
                               radius: 35,
                             ),
                             CircleAvatar(
                               backgroundImage:
-                                  AssetImage('assets/images/person2.png'),
+                                  AssetImage('assets/images/second (1).jpg'),
                               radius: 35,
                             ),
                           ],
@@ -216,8 +297,8 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                                Colors.yellow.shade600),
+                            backgroundColor:
+                                WidgetStateProperty.all(Colors.yellow.shade600),
                             shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -232,8 +313,8 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                                Colors.yellow.shade600),
+                            backgroundColor:
+                                WidgetStateProperty.all(Colors.yellow.shade600),
                             shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -248,8 +329,8 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                                Colors.yellow.shade600),
+                            backgroundColor:
+                                WidgetStateProperty.all(Colors.yellow.shade600),
                             shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -269,8 +350,8 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                                Colors.yellow.shade600),
+                            backgroundColor:
+                                WidgetStateProperty.all(Colors.yellow.shade600),
                             shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -285,8 +366,8 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                                Colors.yellow.shade600),
+                            backgroundColor:
+                                WidgetStateProperty.all(Colors.yellow.shade600),
                             shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -301,8 +382,8 @@ class _HomePageState extends State<HomePage> {
                         ElevatedButton(
                           onPressed: () {},
                           style: ButtonStyle(
-                            backgroundColor: WidgetStateProperty.all(
-                                Colors.yellow.shade600),
+                            backgroundColor:
+                                WidgetStateProperty.all(Colors.yellow.shade600),
                             shape: WidgetStateProperty.all(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10),
@@ -320,41 +401,22 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          ProductCard(
-            imagePath: 'assets/images/person1.png',
-            title: 'Stylish hat and beige jacket',
-            price: '\$19.99',
-            rating: 4.8,
-            ratingCount: 32,
-            isLocked: true,
-          ),
-          ProductCard(
-            imagePath: 'assets/images/person2.png',
-            title: 'Casual jacket with hoodie',
-            price: '\$25.50',
-            rating: 4.5,
-            ratingCount: 28,
-            isLocked: false,
-          ),
-          ProductCard(
-            imagePath: 'assets/images/person1.png',
-            title: 'Classic black leather jacket',
-            price: '\$99.99',
-            rating: 4.9,
-            ratingCount: 120,
-            isLocked: true,
-          ),
-          // Add more ProductCard instances as needed
-        ],
-      ),
-    
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  children: filteredProducts.map((product) {
+                    return ProductCard(
+                      imagePath: product['imagePath'],
+                      title: product['title'],
+                      price: product['price'],
+                      rating: product['rating'],
+                      ratingCount: product['ratingCount'],
+                      isLocked: product['isLocked'],
+                    );
+                  }).toList()),
             ],
           ),
         ),
       ),
-    );
+    ));
   }
 }

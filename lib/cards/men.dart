@@ -98,9 +98,9 @@ class _ProductCardState extends State<ProductCard> {
 
             // Lock Icon
             if (widget.isLocked)
-              Icon(
-                Icons.lock_outline,
-                color: Colors.grey.shade400,
+              IconButton(
+                icon: const Icon(Icons.lock_outline),
+                color: Colors.grey.shade400, onPressed: () {  },
               ),
           ],
         ),
