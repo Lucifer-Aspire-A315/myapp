@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/Category.dart';
+import 'package:myapp/Pages/HomePage.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -60,7 +61,13 @@ class _HomeState extends State<Home> {
                     backgroundColor: WidgetStatePropertyAll(
                         const Color.fromARGB(255, 230, 221, 221)),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomePage(),
+                        ));
+                  },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
