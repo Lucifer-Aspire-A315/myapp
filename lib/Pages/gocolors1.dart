@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/Category.dart';
-import 'package:myapp/Pages/HomePage.dart';
+import 'package:myapp/cards/shopbycolors.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -10,98 +10,216 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool showColorsSection = false; // Control visibility of the colors section
+
   @override
   Widget build(BuildContext context) {
+    // Get screen height to make widgets responsive
+    final screenHeight = MediaQuery.of(context).size.height;
+    final appBarHeight = kToolbarHeight;
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('GO COLORS!', style: TextStyle(color: Colors.black)),
+        title: const Text('GO COLORS!', style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
           IconButton(
-            icon: Icon(Icons.person_outline, color: Colors.black),
+            icon: const Icon(Icons.person_outline, color: Colors.black),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.favorite_border, color: Colors.black),
+            icon: const Icon(Icons.favorite_border, color: Colors.black),
             onPressed: () {},
           ),
           IconButton(
-            icon: Icon(Icons.shopping_cart_outlined, color: Colors.black),
+            icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black),
             onPressed: () {},
           ),
         ],
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: "Search",
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  borderSide: BorderSide.none,
-                ),
-                fillColor: Colors.white,
-                filled: true,
-              ),
-            ),
-          ),
-          SizedBox(height: 10),
-          Center(
-            child: Padding(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Your search field, button, and categories list
+            Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: const ButtonStyle(
-                    backgroundColor: WidgetStatePropertyAll(
-                        const Color.fromARGB(255, 230, 221, 221)),
+              child: TextField(
+                decoration: InputDecoration(
+                  hintText: "Search",
+                  prefixIcon: Icon(Icons.search),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => HomePage(),
-                        ));
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/color-wheel.png', // Replace with your image path
-                        width: 24, // Set image width
-                        height: 24, // Set image height
-                      ),
-                      const SizedBox(width: 8), // Space between image and text
-                      const Text(
-                        'SHOP BY COLOR',
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ],
+                  fillColor: Colors.white,
+                  filled: true,
+                ),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color.fromARGB(255, 230, 221, 221),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        showColorsSection = true; // Show colors section
+                      });
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          'assets/images/color-wheel.png', // Replace with your image path
+                          width: 24, // Set image width
+                          height: 24, // Set image height
+                        ),
+                        const SizedBox(
+                            width: 8), // Space between image and text
+                        const Text(
+                          'SHOP BY COLOR',
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          SizedBox(height: 10),
-          Expanded(
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                CategoryItem(
-                    'Leggings & Churidar', "assets/images/person2.png"),
-                CategoryItem('Ethnicwear', "assets/images/person2.png"),
-                CategoryItem('Palazzos', "assets/images/person2.png"),
-                CategoryItem('Casual Wear Lounge', "assets/images/person2.png"),
-                CategoryItem('More', "assets/images/person2.png"),
-              ],
+            const SizedBox(height: 10),
+            SizedBox(
+              height: screenHeight * 0.2, // Increased height
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  CategoryItem('Leggings & Churidar', "assets/images/th.jpg"),
+                  CategoryItem('Ethnicwear', "assets/images/th.jpg"),
+                  CategoryItem('Palazzos', "assets/images/th.jpg"),
+                  CategoryItem('Casual Wear Lounge', "assets/images/th.jpg"),
+                  CategoryItem('More', "assets/images/th.jpg"),
+                ],
+              ),
             ),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: Row(
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      setState(() {
+                        showColorsSection = false; // Hide colors section
+                      });
+                    },
+                    child: const Text(
+                      "Home",
+                      style: TextStyle(fontSize: 10, color: Colors.grey),
+                    ),
+                  ),
+                  const Text(
+                    "|",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Shop By Colors",
+                      style: TextStyle(fontSize: 10, color: Colors.grey),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
+            // Conditionally display the ShopByColors section or other content
+            if (showColorsSection)
+              SizedBox(
+                height: screenHeight - appBarHeight - 200, // Responsive height
+                child: ShopByColors(),
+              )
+            else ...[
+              // "FESTIVE READY" Banner and other content go here
+              const SizedBox(height: 20),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/shopping.jpg', // Replace with your banner image path
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    top: 20,
+                    left: 20,
+                    child: Text(
+                      'FESTIVE READY',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.pink[600],
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: 20,
+                    right: 20,
+                    child: Text(
+                      'WITH GO!',
+                      style: TextStyle(
+                        fontSize: 24,
+                        color: Colors.grey[800],
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 20,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        // Define the action for the SHOP NOW button
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.black,
+                      ),
+                      child: const Text(
+                        'SHOP NOW',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              Center(
+                child: Text(
+                  'TRENDING BOTTOMWEAR',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const Divider(
+                thickness: 2,
+                color: Colors.black,
+                indent: 16,
+                endIndent: 16,
+              ),
+              const SizedBox(height: 10),
+              // Additional content such as products listing can go here
+            ],
+          ],
+        ),
       ),
     );
   }
