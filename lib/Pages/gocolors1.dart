@@ -96,7 +96,7 @@ class _HomeState extends State<Home> {
             ),
             const SizedBox(height: 10),
             SizedBox(
-              height: screenHeight * 0.2, // Increased height
+              height: screenHeight * 0.15, // Increased height
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
@@ -108,38 +108,35 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8),
-              child: Row(
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      setState(() {
-                        showColorsSection = false; // Hide colors section
-                      });
-                    },
-                    child: const Text(
-                      "Home",
-                      style: TextStyle(fontSize: 10, color: Colors.grey),
-                    ),
+            Row(
+              children: [
+                TextButton(
+                  onPressed: () {
+                    setState(() {
+                      showColorsSection = false; // Hide colors section
+                    });
+                  },
+                  child: const Text(
+                    "Home",
+                    style: TextStyle(fontSize: 10, color: Colors.grey),
                   ),
-                  const Text(
-                    "|",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 15,
-                      color: Colors.grey,
-                    ),
+                ),
+                const Text(
+                  "|",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Colors.grey,
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Shop By Colors",
-                      style: TextStyle(fontSize: 10, color: Colors.grey),
-                    ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "Shop By Colors",
+                    style: TextStyle(fontSize: 10, color: Colors.grey),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
             const SizedBox(height: 10),
             // Conditionally display the ShopByColors section or other content
@@ -150,7 +147,7 @@ class _HomeState extends State<Home> {
               )
             else ...[
               // "FESTIVE READY" Banner and other content go here
-              const SizedBox(height: 20),
+              const SizedBox(height: 0),
               Stack(
                 alignment: Alignment.center,
                 children: [
@@ -158,9 +155,10 @@ class _HomeState extends State<Home> {
                     'assets/images/shopping.jpg', // Replace with your banner image path
                     width: double.infinity,
                     fit: BoxFit.cover,
+                    
                   ),
                   Positioned(
-                    top: 20,
+                    top: 10,
                     left: 20,
                     child: Text(
                       'FESTIVE READY',
@@ -172,7 +170,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   Positioned(
-                    top: 20,
+                    top: 10,
                     right: 20,
                     child: Text(
                       'WITH GO!',
@@ -199,8 +197,8 @@ class _HomeState extends State<Home> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
-              Center(
+              const SizedBox(height: 30),
+              const Center(
                 child: Text(
                   'TRENDING BOTTOMWEAR',
                   style: TextStyle(
@@ -212,10 +210,75 @@ class _HomeState extends State<Home> {
               const Divider(
                 thickness: 2,
                 color: Colors.black,
-                indent: 16,
-                endIndent: 16,
+                indent: 50,
+                endIndent: 50,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/shopping.jpg', // Replace with your banner image path
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                    
+                  ),
+                  // Positioned(
+                  //   top: 10,
+                  //   left: 20,
+                  //   child: Text(
+                  //     'FESTIVE READY',
+                  //     style: TextStyle(
+                  //       fontSize: 24,
+                  //       color: Colors.pink[600],
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Positioned(
+                  //   top: 10,
+                  //   right: 20,
+                  //   child: Text(
+                  //     'WITH GO!',
+                  //     style: TextStyle(
+                  //       fontSize: 24,
+                  //       color: Colors.grey[800],
+                  //     ),
+                  //   ),
+                  // ),
+                  // Positioned(
+                  //   bottom: 20,
+                  //   child: ElevatedButton(
+                  //     onPressed: () {
+                  //       // Define the action for the SHOP NOW button
+                  //     },
+                  //     style: ElevatedButton.styleFrom(
+                  //       backgroundColor: Colors.black,
+                  //     ),
+                  //     child: const Text(
+                  //       'SHOP NOW',
+                  //       style: TextStyle(color: Colors.white),
+                  //     ),
+                  //   ),
+                  // ),
+                ],
+              ),
+              const SizedBox(height: 30),
+              const Center(
+                child: Text(
+                  'MUST HAVES',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              // const Divider(
+              //   thickness: 2,
+              //   color: Colors.black,
+              //   indent: 50,
+              //   endIndent: 50,
+              // ),
               // Additional content such as products listing can go here
             ],
           ],
