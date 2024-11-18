@@ -66,6 +66,17 @@ flutter:
     - assets/images/bag.png
     - assets/images/second (1).jpg
     - assets/images/color-wheel.png
+    - assets/images/Trending-Now-Banner_Mobile_414x650.jpg
+    - assets/images/Festive-with-Go-Banner_Mobile_414x650.jpg
+    - assets/images/Top_Scroll_Circle_Product_Icon-01.jpg
+    - assets/images/Top_Scroll_Circle_Product_Icon-02.jpg
+    - assets/images/Top_Scroll_Circle_Product_Icon-04.jpg
+    - assets/images/Top_Scroll_Circle_Product_Icon-05.jpg
+    - assets/images/Top_Scroll_Circle_Product_Icon-06.jpg
+    - assets/images/Top_Scroll_Circle_Product_Icon-07.jpg
+    - assets/images/Top_Scroll_Circle_Product_Icon-08.jpg
+    - assets/images/Top_Scroll_Circle_Product_Icon-09.jpg
+    - assets/images/Must-Have_Mobile_414x600.jpg
     - assets/images/second (2).jpg
     - assets/images/second (3).jpg
     - assets/images/photo.jpg
@@ -78,6 +89,15 @@ flutter:
     - assets/images/user.png
     - assets/images/person1.png
     - assets/images/person2.png
+    - assets/colors/beige.png
+    - assets/colors/dark_pink.png
+    - assets/colors/Grey.png
+    - assets/colors/Mustard.png
+    - assets/colors/Ocean_green.png
+    - assets/colors/olive_green.png
+    - assets/colors/purple.png
+    - assets/colors/red_c9bdc17f-6089-4d31-a837-92f7b606d99a.png
+    - assets/colors/rust_4444a6bd-ea5d-4e61-a59c-b3e3cdb6a336.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

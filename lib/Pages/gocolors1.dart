@@ -100,11 +100,14 @@ class _HomeState extends State<Home> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  CategoryItem('Leggings & Churidar', "assets/images/th.jpg"),
-                  CategoryItem('Ethnicwear', "assets/images/th.jpg"),
-                  CategoryItem('Palazzos', "assets/images/th.jpg"),
-                  CategoryItem('Casual Wear Lounge', "assets/images/th.jpg"),
-                  CategoryItem('More', "assets/images/th.jpg"),
+                  CategoryItem('Leggings & Churidar', "assets/images/Top_Scroll_Circle_Product_Icon-01.jpg"),
+                  CategoryItem('Ethnicwear', "assets/images/Top_Scroll_Circle_Product_Icon-02.jpg"),
+                  CategoryItem('Casualwear Lounge', "assets/images/Top_Scroll_Circle_Product_Icon-04.jpg"),
+                  CategoryItem('Jeans & Jeggings', "assets/images/Top_Scroll_Circle_Product_Icon-05.jpg"),
+                  CategoryItem('Formalwear', "assets/images/Top_Scroll_Circle_Product_Icon-06.jpg"),
+                  CategoryItem('Loungewear', "assets/images/Top_Scroll_Circle_Product_Icon-07.jpg"),
+                  CategoryItem('Activewear', "assets/images/Top_Scroll_Circle_Product_Icon-08.jpg"),
+                  CategoryItem('Winterwear', "assets/images/Top_Scroll_Circle_Product_Icon-09.jpg"),
                 ],
               ),
             ),
@@ -152,49 +155,11 @@ class _HomeState extends State<Home> {
                 alignment: Alignment.center,
                 children: [
                   Image.asset(
-                    'assets/images/shopping.jpg', // Replace with your banner image path
+                    'assets/images/Festive-with-Go-Banner_Mobile_414x650.jpg', // Replace with your banner image path
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    
                   ),
-                  Positioned(
-                    top: 10,
-                    left: 20,
-                    child: Text(
-                      'FESTIVE READY',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.pink[600],
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 10,
-                    right: 20,
-                    child: Text(
-                      'WITH GO!',
-                      style: TextStyle(
-                        fontSize: 24,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    bottom: 20,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Define the action for the SHOP NOW button
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.black,
-                      ),
-                      child: const Text(
-                        'SHOP NOW',
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ),
+                  //
                 ],
               ),
               const SizedBox(height: 30),
@@ -215,54 +180,78 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(height: 40),
               Stack(
-                alignment: Alignment.center,
                 children: [
+                  // Background Image
                   Image.asset(
-                    'assets/images/shopping.jpg', // Replace with your banner image path
+                    'assets/images/Trending-Now-Banner_Mobile_414x650.jpg', // Replace with your image path
                     width: double.infinity,
                     fit: BoxFit.cover,
-                    
                   ),
-                  // Positioned(
-                  //   top: 10,
-                  //   left: 20,
-                  //   child: Text(
-                  //     'FESTIVE READY',
-                  //     style: TextStyle(
-                  //       fontSize: 24,
-                  //       color: Colors.pink[600],
-                  //       fontWeight: FontWeight.bold,
-                  //     ),
-                  //   ),
-                  // ),
-                  // Positioned(
-                  //   top: 10,
-                  //   right: 20,
-                  //   child: Text(
-                  //     'WITH GO!',
-                  //     style: TextStyle(
-                  //       fontSize: 24,
-                  //       color: Colors.grey[800],
-                  //     ),
-                  //   ),
-                  // ),
-                  // Positioned(
-                  //   bottom: 20,
-                  //   child: ElevatedButton(
-                  //     onPressed: () {
-                  //       // Define the action for the SHOP NOW button
-                  //     },
-                  //     style: ElevatedButton.styleFrom(
-                  //       backgroundColor: Colors.black,
-                  //     ),
-                  //     child: const Text(
-                  //       'SHOP NOW',
-                  //       style: TextStyle(color: Colors.white),
-                  //     ),
-                  //   ),
-                  // ),
+                  // Center Aligned Text
+                   Positioned(
+                    top: screenHeight/4.5,
+                    left: 10,
+                    child: const Align(
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'ANKLE LENGTH LEGGINGS',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              // letterSpacing: 1.2,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'KURTI PANTS',
+                            style: TextStyle(
+                              fontSize: 16,
+                               fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              // letterSpacing: 1.2,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'CHURIDAR',
+                            style: TextStyle(
+                              fontSize: 16,
+                             fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              // letterSpacing: 1.2,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'SHIMMER LEGGINGS',
+                            style: TextStyle(
+                              fontSize: 16,
+                               fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              // letterSpacing: 1.2,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            'COTTON PANTS',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black,
+                              // letterSpacing: 1.2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ],
               ),
+
               const SizedBox(height: 30),
               const Center(
                 child: Text(
@@ -273,13 +262,48 @@ class _HomeState extends State<Home> {
                   ),
                 ),
               ),
-              // const Divider(
-              //   thickness: 2,
-              //   color: Colors.black,
-              //   indent: 50,
-              //   endIndent: 50,
-              // ),
-              // Additional content such as products listing can go here
+              const SizedBox(height: 30),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    'assets/images/Must-Have_Mobile_414x600.jpg', // Replace with your banner image path
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  //
+                ],
+              ),
+              const SizedBox(height: 30),
+               const Center(
+                child: Text(
+                  'TRENDING COLORS',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+
+
+              SizedBox(
+              height: screenHeight * 0.15, // Increased height
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  CategoryItem('beige', "assets/colors/beige.png"),
+                  CategoryItem('Dark pink', "assets/colors/dark_pink.png"),
+                  CategoryItem('Grey', "assets/colors/Grey.png"),
+                  CategoryItem('Mustard', "assets/colors/Mustard.png"),
+                  CategoryItem('Ocean Green', "assets/colors/Ocean_green.png"),
+                  CategoryItem('Olive Green', "assets/colors/olive_green.png"),
+                  CategoryItem('Purple', "assets/colors/purple.png"),
+                  CategoryItem('Red', "assets/colors/red_c9bdc17f-6089-4d31-a837-92f7b606d99a.png"),
+                  CategoryItem('Rust', "assets/colors/rust_4444a6bd-ea5d-4e61-a59c-b3e3cdb6a336.png"),
+                ],
+              ),
+            ),
             ],
           ],
         ),

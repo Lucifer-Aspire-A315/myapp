@@ -15,9 +15,9 @@ class CategoryItem extends StatelessWidget {
           Container(
             width: 75, // Adjusts the size of the outermost circle
             height: 75,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: Colors.grey[200], // Background color of outermost circle
+              color: Colors.white, // Background color of outermost circle
             ),
             child: Container(
               width: 70, // Adjusts the size of the middle border circle
@@ -25,13 +25,13 @@ class CategoryItem extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: Colors.grey, // Middle border color
+                  color: Colors.white, // Middle border color
                   width: 2.0, // Middle border width
                 ),
               ),
               child: CircleAvatar(
                 radius: 30,
-                backgroundColor: Colors.grey[300],
+                backgroundColor: Colors.white,
                 backgroundImage: AssetImage(imageUrl),
               ),
             ),
