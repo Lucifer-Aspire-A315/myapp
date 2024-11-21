@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/Category.dart';
+import 'package:myapp/Pages/clothing.dart';
 import 'package:myapp/cards/shopbycolors.dart';
 
 class Home extends StatefulWidget {
@@ -100,14 +101,29 @@ class _HomeState extends State<Home> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: [
-                  CategoryItem('Leggings & Churidar', "assets/images/Top_Scroll_Circle_Product_Icon-01.jpg"),
-                  CategoryItem('Ethnicwear', "assets/images/Top_Scroll_Circle_Product_Icon-02.jpg"),
-                  CategoryItem('Casualwear Lounge', "assets/images/Top_Scroll_Circle_Product_Icon-04.jpg"),
-                  CategoryItem('Jeans & Jeggings', "assets/images/Top_Scroll_Circle_Product_Icon-05.jpg"),
-                  CategoryItem('Formalwear', "assets/images/Top_Scroll_Circle_Product_Icon-06.jpg"),
-                  CategoryItem('Loungewear', "assets/images/Top_Scroll_Circle_Product_Icon-07.jpg"),
-                  CategoryItem('Activewear', "assets/images/Top_Scroll_Circle_Product_Icon-08.jpg"),
-                  CategoryItem('Winterwear', "assets/images/Top_Scroll_Circle_Product_Icon-09.jpg"),
+                  GestureDetector(
+                    child: CategoryItem('Leggings & Churidar',
+                        "assets/images/Top_Scroll_Circle_Product_Icon-01.jpg"),
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ClothingListPage()),
+                    ),
+                  ),
+                  CategoryItem('Ethnicwear',
+                      "assets/images/Top_Scroll_Circle_Product_Icon-02.jpg"),
+                  CategoryItem('Casualwear Lounge',
+                      "assets/images/Top_Scroll_Circle_Product_Icon-04.jpg"),
+                  CategoryItem('Jeans & Jeggings',
+                      "assets/images/Top_Scroll_Circle_Product_Icon-05.jpg"),
+                  CategoryItem('Formalwear',
+                      "assets/images/Top_Scroll_Circle_Product_Icon-06.jpg"),
+                  CategoryItem('Loungewear',
+                      "assets/images/Top_Scroll_Circle_Product_Icon-07.jpg"),
+                  CategoryItem('Activewear',
+                      "assets/images/Top_Scroll_Circle_Product_Icon-08.jpg"),
+                  CategoryItem('Winterwear',
+                      "assets/images/Top_Scroll_Circle_Product_Icon-09.jpg"),
                 ],
               ),
             ),
@@ -188,8 +204,8 @@ class _HomeState extends State<Home> {
                     fit: BoxFit.cover,
                   ),
                   // Center Aligned Text
-                   Positioned(
-                    top: screenHeight/4.5,
+                  Positioned(
+                    top: screenHeight / 4.5,
                     left: 10,
                     child: const Align(
                       alignment: Alignment.center,
@@ -210,7 +226,7 @@ class _HomeState extends State<Home> {
                             'KURTI PANTS',
                             style: TextStyle(
                               fontSize: 16,
-                               fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w500,
                               color: Colors.black,
                               // letterSpacing: 1.2,
                             ),
@@ -220,7 +236,7 @@ class _HomeState extends State<Home> {
                             'CHURIDAR',
                             style: TextStyle(
                               fontSize: 16,
-                             fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w500,
                               color: Colors.black,
                               // letterSpacing: 1.2,
                             ),
@@ -230,7 +246,7 @@ class _HomeState extends State<Home> {
                             'SHIMMER LEGGINGS',
                             style: TextStyle(
                               fontSize: 16,
-                               fontWeight: FontWeight.w500,
+                              fontWeight: FontWeight.w500,
                               color: Colors.black,
                               // letterSpacing: 1.2,
                             ),
@@ -275,7 +291,7 @@ class _HomeState extends State<Home> {
                 ],
               ),
               const SizedBox(height: 30),
-               const Center(
+              const Center(
                 child: Text(
                   'TRENDING COLORS',
                   style: TextStyle(
@@ -286,24 +302,27 @@ class _HomeState extends State<Home> {
               ),
               const SizedBox(height: 30),
 
-
               SizedBox(
-              height: screenHeight * 0.15, // Increased height
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  CategoryItem('beige', "assets/colors/beige.png"),
-                  CategoryItem('Dark pink', "assets/colors/dark_pink.png"),
-                  CategoryItem('Grey', "assets/colors/Grey.png"),
-                  CategoryItem('Mustard', "assets/colors/Mustard.png"),
-                  CategoryItem('Ocean Green', "assets/colors/Ocean_green.png"),
-                  CategoryItem('Olive Green', "assets/colors/olive_green.png"),
-                  CategoryItem('Purple', "assets/colors/purple.png"),
-                  CategoryItem('Red', "assets/colors/red_c9bdc17f-6089-4d31-a837-92f7b606d99a.png"),
-                  CategoryItem('Rust', "assets/colors/rust_4444a6bd-ea5d-4e61-a59c-b3e3cdb6a336.png"),
-                ],
+                height: screenHeight * 0.15, // Increased height
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    CategoryItem('beige', "assets/colors/beige.png"),
+                    CategoryItem('Dark pink', "assets/colors/dark_pink.png"),
+                    CategoryItem('Grey', "assets/colors/Grey.png"),
+                    CategoryItem('Mustard', "assets/colors/Mustard.png"),
+                    CategoryItem(
+                        'Ocean Green', "assets/colors/Ocean_green.png"),
+                    CategoryItem(
+                        'Olive Green', "assets/colors/olive_green.png"),
+                    CategoryItem('Purple', "assets/colors/purple.png"),
+                    CategoryItem('Red',
+                        "assets/colors/red_c9bdc17f-6089-4d31-a837-92f7b606d99a.png"),
+                    CategoryItem('Rust',
+                        "assets/colors/rust_4444a6bd-ea5d-4e61-a59c-b3e3cdb6a336.png"),
+                  ],
+                ),
               ),
-            ),
             ],
           ],
         ),
