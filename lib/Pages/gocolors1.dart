@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/Category.dart';
 import 'package:myapp/Pages/clothing.dart';
 import 'package:myapp/cards/shopbycolors.dart';
+import 'package:myapp/cards/testing.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -12,6 +15,44 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool showColorsSection = false; // Control visibility of the colors section
+   final List<String> _slideshowImages = [
+    'assets/images/Festive-with-Go-Banner_Mobile_414x650.jpg',
+    'assets/images/Trending-Now-Banner_Mobile_414x650.jpg',
+    'assets/images/Must-Have_Mobile_414x600.jpg',
+  ];
+
+  int _currentPage = 0;
+  late final PageController _pageController;
+  late final Timer _slideshowTimer;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+
+    // Timer for automatic slideshow
+    _slideshowTimer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
+      setState(() {
+        if (_currentPage < _slideshowImages.length - 1) {
+          _currentPage++;
+        } else {
+          _currentPage = 0;
+        }
+        _pageController.animateToPage(
+          _currentPage,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeIn,
+        );
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose(); // Dispose of the PageController
+    _slideshowTimer.cancel(); // Cancel the Timer to avoid memory leaks
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -107,7 +148,7 @@ class _HomeState extends State<Home> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ClothingListPage()),
+                          builder: (context) => LeggingsChuridarScreen()),
                     ),
                   ),
                   CategoryItem('Ethnicwear',
@@ -167,17 +208,20 @@ class _HomeState extends State<Home> {
             else ...[
               // "FESTIVE READY" Banner and other content go here
               const SizedBox(height: 0),
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Image.asset(
-                    'assets/images/Festive-with-Go-Banner_Mobile_414x650.jpg', // Replace with your banner image path
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                  //
-                ],
-              ),
+             SizedBox(
+                height: screenHeight * 0.6, // Adjust height for the slideshow
+                child: PageView.builder(
+                  controller: _pageController,
+                  itemCount: _slideshowImages.length,
+                  itemBuilder: (context, index) {
+                    return Image.asset(
+                      _slideshowImages[index],
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    );
+                  },
+                ),
+             ),
               const SizedBox(height: 30),
               const Center(
                 child: Text(
