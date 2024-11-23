@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/Category.dart';
 import 'package:myapp/Pages/clothing.dart';
+import 'package:myapp/Pages/wishlist.dart';
 import 'package:myapp/cards/shopbycolors.dart';
-import 'package:myapp/cards/testing.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -73,7 +73,12 @@ class _HomeState extends State<Home> {
           ),
           IconButton(
             icon: const Icon(Icons.favorite_border, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishlistPage()),
+              );
+            },
           ),
           IconButton(
             icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black),
@@ -401,10 +406,11 @@ class _HomeState extends State<Home> {
                             //   width: double.infinity,
                             //   fit: BoxFit.cover,
                             // ),
-                            Image.network("https://gocolors.com/cdn/shop/files/Go-Edits-1_d85b6771-00fb-45c1-abcd-17ad1e608fd9.jpg?v=1732013386",
-                               width: double.infinity,
-                              fit: BoxFit.cover,)
-                            
+                            Image.network(
+                              "https://gocolors.com/cdn/shop/files/Go-Edits-1_d85b6771-00fb-45c1-abcd-17ad1e608fd9.jpg?v=1732013386",
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
                           ],
                         ),
                       ),
@@ -418,9 +424,11 @@ class _HomeState extends State<Home> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                           Image.network("https://gocolors.com/cdn/shop/files/Go-Edits-2_6e6f5fbc-ba00-4821-86f2-57eac9006ea9.jpg?v=1732013386",
-                               width: double.infinity,
-                              fit: BoxFit.cover,)
+                            Image.network(
+                              "https://gocolors.com/cdn/shop/files/Go-Edits-2_6e6f5fbc-ba00-4821-86f2-57eac9006ea9.jpg?v=1732013386",
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
                             //
                           ],
                         ),
@@ -435,9 +443,11 @@ class _HomeState extends State<Home> {
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
-                            Image.network("https://gocolors.com/cdn/shop/files/Go-Edits-3_6ee77b16-12b4-4078-b001-af01f68a0d4d.jpg?v=1732013386",
-                               width: double.infinity,
-                              fit: BoxFit.cover,)
+                            Image.network(
+                              "https://gocolors.com/cdn/shop/files/Go-Edits-3_6ee77b16-12b4-4078-b001-af01f68a0d4d.jpg?v=1732013386",
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            )
                             //
                           ],
                         ),

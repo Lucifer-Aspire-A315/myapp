@@ -22,4 +22,14 @@ class ClothingItem {
       description: json['description'],
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other is! ClothingItem) return false;
+    return id == other.id; // Compare based on a unique identifier
+  }
+
+  @override
+  int get hashCode => id.hashCode; // Use the unique identifier for hashCode
 }

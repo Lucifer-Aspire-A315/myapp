@@ -142,12 +142,12 @@
 //   }
 // }
 
-
-
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/cards/clothingCard.dart';
+
 import '../models/cloth.dart';
 
 class ClothingListPage extends StatefulWidget {
@@ -156,7 +156,8 @@ class ClothingListPage extends StatefulWidget {
 }
 
 class _ClothingListPageState extends State<ClothingListPage> {
-  String _selectedSort = "Best Selling"; // State to track selected sorting option
+  String _selectedSort =
+      "Best Selling"; // State to track selected sorting option
   List<ClothingItem> _items = []; // To hold fetched items
   bool _isLoading = true; // Loading indicator
   String? _error; // To track errors
@@ -177,7 +178,8 @@ class _ClothingListPageState extends State<ClothingListPage> {
     } catch (error) {
       setState(() {
         _isLoading = false;
-        _error = "Failed to fetch items. Please try again."; // Capture the error
+        _error =
+            "Failed to fetch items. Please try again."; // Capture the error
       });
     }
   }
@@ -212,10 +214,12 @@ class _ClothingListPageState extends State<ClothingListPage> {
         children: [
           // Padding widget with Dropdown and Refine By button
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 30.0),
             child: Container(
               decoration: BoxDecoration(
-                border: Border.all(color: const Color.fromARGB(255, 71, 66, 66), width: 1.0),
+                border: Border.all(
+                    color: const Color.fromARGB(255, 71, 66, 66), width: 1.0),
                 color: const Color.fromARGB(0, 255, 255, 255),
               ),
               child: Row(
@@ -245,7 +249,8 @@ class _ClothingListPageState extends State<ClothingListPage> {
                           }).toList(),
                           onChanged: (String? newValue) {
                             if (newValue != null) {
-                              _sortItems(newValue); // Sort items when a new option is selected
+                              _sortItems(
+                                  newValue); // Sort items when a new option is selected
                             }
                           },
                           isExpanded: true,
@@ -265,7 +270,8 @@ class _ClothingListPageState extends State<ClothingListPage> {
                           SizedBox(width: 8.0),
                           Text(
                             "Refine By",
-                            style: TextStyle(fontSize: 16.0, color: Colors.black),
+                            style:
+                                TextStyle(fontSize: 16.0, color: Colors.black),
                           ),
                         ],
                       ),
@@ -280,12 +286,15 @@ class _ClothingListPageState extends State<ClothingListPage> {
             child: _isLoading
                 ? Center(child: CircularProgressIndicator())
                 : _error != null
-                    ? Center(child: Text(_error!)) // Show error message if fetching failed
+                    ? Center(
+                        child: Text(
+                            _error!)) // Show error message if fetching failed
                     : _items.isEmpty
                         ? Center(child: Text('No items found'))
                         : GridView.builder(
                             padding: EdgeInsets.all(16.0),
-                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: crossAxisCount,
                               crossAxisSpacing: 5,
                               mainAxisSpacing: 5,
@@ -305,7 +314,7 @@ class _ClothingListPageState extends State<ClothingListPage> {
 
 Future<List<ClothingItem>> fetchClothingItems() async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.10:5002/api/auth/clothing-item'));
+      .get(Uri.parse('http://192.168.1.38:5002/api/auth/clothing-item'));
 
   if (response.statusCode == 200) {
     final List<dynamic> data = jsonDecode(response.body);
