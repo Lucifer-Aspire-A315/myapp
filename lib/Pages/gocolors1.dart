@@ -15,10 +15,10 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   bool showColorsSection = false; // Control visibility of the colors section
-   final List<String> _slideshowImages = [
+  final List<String> _slideshowImages = [
     'assets/images/Festive-with-Go-Banner_Mobile_414x650.jpg',
-    'assets/images/Trending-Now-Banner_Mobile_414x650.jpg',
-    'assets/images/Must-Have_Mobile_414x600.jpg',
+    'assets/images/Wedding-styles-Mobile_414x650.jpg',
+    'assets/images/Winter-wear-styles-Mobile_414x650.jpg',
   ];
 
   int _currentPage = 0;
@@ -148,7 +148,7 @@ class _HomeState extends State<Home> {
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => LeggingsChuridarScreen()),
+                          builder: (context) => ClothingListPage()),
                     ),
                   ),
                   CategoryItem('Ethnicwear',
@@ -208,8 +208,8 @@ class _HomeState extends State<Home> {
             else ...[
               // "FESTIVE READY" Banner and other content go here
               const SizedBox(height: 0),
-             SizedBox(
-                height: screenHeight * 0.6, // Adjust height for the slideshow
+              SizedBox(
+                height: screenHeight * 0.7, // Adjust height for the slideshow
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: _slideshowImages.length,
@@ -221,7 +221,7 @@ class _HomeState extends State<Home> {
                     );
                   },
                 ),
-             ),
+              ),
               const SizedBox(height: 30),
               const Center(
                 child: Text(
@@ -367,6 +367,85 @@ class _HomeState extends State<Home> {
                   ],
                 ),
               ),
+
+              const SizedBox(height: 30),
+
+              const Center(
+                child: Text(
+                  'GO EDITS',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 30),
+
+              Padding(
+                padding: const EdgeInsets.fromLTRB(40, 0, 40, 40),
+                child: Container(
+                  child: Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ClothingListPage()),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            // Image.asset(
+                            //   'assets/images/Go-Edits-1_d85b6771-00fb-45c1-abcd-17ad1e608fd9.jpg', // Replace with your banner image path
+                            //   width: double.infinity,
+                            //   fit: BoxFit.cover,
+                            // ),
+                            Image.network("https://gocolors.com/cdn/shop/files/Go-Edits-1_d85b6771-00fb-45c1-abcd-17ad1e608fd9.jpg?v=1732013386",
+                               width: double.infinity,
+                              fit: BoxFit.cover,)
+                            
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ClothingListPage()),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                           Image.network("https://gocolors.com/cdn/shop/files/Go-Edits-2_6e6f5fbc-ba00-4821-86f2-57eac9006ea9.jpg?v=1732013386",
+                               width: double.infinity,
+                              fit: BoxFit.cover,)
+                            //
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 30),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ClothingListPage()),
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            Image.network("https://gocolors.com/cdn/shop/files/Go-Edits-3_6ee77b16-12b4-4078-b001-af01f68a0d4d.jpg?v=1732013386",
+                               width: double.infinity,
+                              fit: BoxFit.cover,)
+                            //
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ],
         ),
