@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/Category.dart';
 import 'package:myapp/Pages/clothing.dart';
+import 'package:myapp/Pages/shoppingcart.dart';
 import 'package:myapp/Pages/wishlist.dart';
 import 'package:myapp/cards/shopbycolors.dart';
 
@@ -82,7 +83,13 @@ class _HomeState extends State<Home> {
           ),
           IconButton(
             icon: const Icon(Icons.shopping_cart_outlined, color: Colors.black),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ShoppingCartPage()),
+              );
+            },
           ),
         ],
       ),

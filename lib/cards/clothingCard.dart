@@ -1,11 +1,15 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:myapp/cards/shoppingmainpage.dart';
 import 'package:myapp/models/cloth.dart'; // Replace with the correct path to your ClothingItem model
 
 class ClothingCard extends StatelessWidget {
   final ClothingItem item;
+  final VoidCallback? onTap;
 
-  const ClothingCard({Key? key, required this.item}) : super(key: key);
+  const ClothingCard({Key? key, required this.item, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +18,7 @@ class ClothingCard extends StatelessWidget {
         context,
         MaterialPageRoute(
             builder: (context) => ItemDetailsPage(
+                  itemId: item.id,
                   item: item,
                 )),
       ),

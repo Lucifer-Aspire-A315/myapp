@@ -46,6 +46,7 @@ class WishlistPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ItemDetailsPage(
+                                      itemId: item.id,
                                       item: item,
                                     )),
                           ),

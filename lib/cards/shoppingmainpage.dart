@@ -1,12 +1,18 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:myapp/Pages/shoppingcart.dart';
 import 'package:myapp/models/wishlist.dart';
 
-import '../models/cloth.dart'; // Replace with the correct path to your ClothingItem model
+import '../models/cloth.dart'; // Replace with your model path
 
 class ItemDetailsPage extends StatefulWidget {
   final ClothingItem item;
+  final int itemId;
 
-  const ItemDetailsPage({Key? key, required this.item}) : super(key: key);
+  const ItemDetailsPage({Key? key, required this.item, required this.itemId})
+      : super(key: key);
 
   @override
   _ItemDetailsPageState createState() => _ItemDetailsPageState();
@@ -15,6 +21,8 @@ class ItemDetailsPage extends StatefulWidget {
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
   late bool isInWishlist;
   String selectedSize = "S"; // Default selected size
+  late Future<List<dynamic>> _itemDetails;
+  int quantity = 1;
 
   // Available and unavailable sizes
   final List<String> sizes = ["S", "M", "L", "XL", "2X", "3X", "4X"];
@@ -25,6 +33,28 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     super.initState();
     // Synchronize the state with WishlistManager
     isInWishlist = WishlistManager().wishlist.contains(widget.item);
+    _itemDetails = fetchItemImages(widget.itemId);
+  }
+
+  Future<List<dynamic>> fetchItemImages(int itemId) async {
+    final response = await http.get(
+      Uri.parse('http://192.168.1.38:5002/api/auth/clothing-item/$itemId'),
+    );
+
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      // Check if the images list is empty
+      if (data["images"].isEmpty) {
+        print("no data");
+        return []; // Return an empty list
+      } else {
+        print("data available");
+        return data["images"];
+      }
+    } else {
+      throw Exception('Failed to load item details');
+    }
   }
 
   void toggleWishlist() {
@@ -96,143 +126,261 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
       appBar: AppBar(
         title: Center(child: Text(widget.item.name)),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Image
-              Stack(
-                children: [
-                  Center(
-                    child: Image.network(
-                      widget.item.imageUrl,
-                      height: MediaQuery.sizeOf(context).height / 2,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                    ),
+      body: FutureBuilder<List<dynamic>>(
+        future: _itemDetails,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            final images = snapshot.data!;
+            return buildContent(context, images);
+          } else {
+            return const Center(child: Text('No images found'));
+          }
+        },
+      ),
+      bottomNavigationBar: buildBottomBar(),
+    );
+  }
+
+  Widget buildContent(BuildContext context, List<dynamic> images) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image Slideshow
+            buildImageSlideshow(images),
+            const SizedBox(height: 16.0),
+
+            // Name
+            Text(
+              widget.item.name,
+              style: const TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8.0),
+
+            // Price
+            Text(
+              '₹${widget.item.price}',
+              style: const TextStyle(
+                fontSize: 20.0,
+                color: Colors.green,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 16.0),
+
+            // Size Selector
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "SIZE",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
                   ),
-                  Positioned(
-                    top: 20,
-                    left: 20,
-                    child: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: IconButton(
-                        onPressed: toggleWishlist, // Toggle wishlist on press
-                        icon: Icon(
-                          Icons.favorite,
-                          color: isInWishlist
-                              ? Colors.red
-                              : Colors.grey, // Change color based on state
-                        ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    showSizeGuide(context);
+                  },
+                  child: const Text(
+                    "Size Guide",
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 8.0),
+
+            Wrap(
+              spacing: 8.0,
+              children: sizes.map((size) {
+                final isUnavailable = unavailableSizes.contains(size);
+                return GestureDetector(
+                  onTap: isUnavailable
+                      ? null
+                      : () {
+                          setState(() {
+                            selectedSize = size;
+                          });
+                        },
+                  child: Container(
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: selectedSize == size && !isUnavailable
+                          ? Colors.black
+                          : Colors.white,
+                      border: Border.all(
+                        color: isUnavailable
+                            ? Colors.grey
+                            : selectedSize == size
+                                ? Colors.black
+                                : Colors.grey,
+                      ),
+                    ),
+                    child: Text(
+                      size,
+                      style: TextStyle(
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                        color: isUnavailable
+                            ? Colors.grey
+                            : selectedSize == size
+                                ? Colors.white
+                                : Colors.black,
+                        decoration: isUnavailable
+                            ? TextDecoration.lineThrough
+                            : TextDecoration.none,
                       ),
                     ),
                   ),
-                ],
+                );
+              }).toList(),
+            ),
+            const SizedBox(height: 16.0),
+
+            // Description
+            Text(
+              widget.item.description,
+              style: const TextStyle(
+                fontSize: 16.0,
+                color: Colors.black87,
               ),
-              const SizedBox(height: 16.0),
-              // Name
-              Text(
-                widget.item.name,
-                style: const TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8.0),
-              // Price
-              Text(
-                '₹${widget.item.price}',
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.green,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              // Size Selector
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text(
-                    "SIZE",
-                    style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      showSizeGuide(context); // Show size guide dialog
-                    },
-                    child: const Text(
-                      "Size Guide",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              Wrap(
-                spacing: 8.0,
-                children: sizes.map((size) {
-                  final isUnavailable = unavailableSizes.contains(size);
-                  return GestureDetector(
-                    onTap: isUnavailable
-                        ? null
-                        : () {
-                            setState(() {
-                              selectedSize = size;
-                            });
-                          },
-                    child: Container(
-                      padding: const EdgeInsets.all(8.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: selectedSize == size && !isUnavailable
-                            ? Colors.black
-                            : Colors.white,
-                        border: Border.all(
-                          color: isUnavailable
-                              ? Colors.grey
-                              : selectedSize == size
-                                  ? Colors.black
-                                  : Colors.grey,
-                        ),
-                      ),
-                      child: Text(
-                        size,
-                        style: TextStyle(
-                          fontSize: 14.0,
-                          fontWeight: FontWeight.bold,
-                          color: isUnavailable
-                              ? Colors.grey
-                              : selectedSize == size
-                                  ? Colors.white
-                                  : Colors.black,
-                          decoration: isUnavailable
-                              ? TextDecoration.lineThrough
-                              : TextDecoration.none,
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 16.0),
-              // Description
-              Text(
-                widget.item.description,
-                style: const TextStyle(
-                  fontSize: 16.0,
-                  color: Colors.black87,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-            ],
+            ),
+            const SizedBox(height: 16.0),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildImageSlideshow(List<dynamic> images) {
+    if (images.isEmpty) {
+      // If the images list is empty, display a message
+      return Center(
+        child: Text(
+          "No images are currently available",
+          style: TextStyle(
+            fontSize: 18.0,
+            color: Colors.grey,
           ),
         ),
+      );
+    } else {
+      // If the images list has data, display the slideshow
+      return Stack(
+        children: [
+          Center(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.height / 2,
+              child: PageView.builder(
+                itemCount: images.length,
+                itemBuilder: (context, index) {
+                  return Image.network(
+                    images[index]["imageUrl"],
+                    height: MediaQuery.of(context).size.height / 2,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  );
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            top: 20,
+            left: 20,
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              child: IconButton(
+                onPressed: toggleWishlist, // Toggle wishlist on press
+                icon: Icon(
+                  Icons.favorite,
+                  color: isInWishlist
+                      ? Colors.red
+                      : Colors.grey, // Change color based on state
+                ),
+              ),
+            ),
+          )
+        ],
+      );
+    }
+  }
+
+  Widget buildBottomBar() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      color: Colors.black,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          // Quantity Selector
+          Row(
+            children: [
+              IconButton(
+                onPressed: () {
+                  if (quantity > 1) {
+                    setState(() {
+                      quantity--;
+                    });
+                  }
+                },
+                icon: const Icon(Icons.remove, color: Colors.white),
+              ),
+              Text(
+                quantity.toString(),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
+              ),
+              IconButton(
+                onPressed: () {
+                  setState(() {
+                    quantity++;
+                  });
+                },
+                icon: const Icon(Icons.add, color: Colors.white),
+              ),
+            ],
+          ),
+          // Add to Cart Button
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.white,
+              foregroundColor: Colors.black,
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            ),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => ShoppingCartPage(
+                          itemId: widget.itemId,
+                        )),
+              );
+              // Add to cart logic
+              // ScaffoldMessenger.of(context).showSnackBar(
+              //   SnackBar(
+              //     content:
+              //         Text("$quantity x ${widget.item.name} added to cart!"),
+              //   ),
+              // );
+            },
+            child: const Text(
+              "ADD TO CART",
+              style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+            ),
+          ),
+        ],
       ),
     );
   }

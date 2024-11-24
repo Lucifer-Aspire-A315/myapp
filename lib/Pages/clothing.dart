@@ -147,6 +147,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/cards/clothingCard.dart';
+import 'package:myapp/cards/shoppingmainpage.dart';
 
 import '../models/cloth.dart';
 
@@ -302,7 +303,24 @@ class _ClothingListPageState extends State<ClothingListPage> {
                             ),
                             itemCount: _items.length,
                             itemBuilder: (context, index) {
-                              return ClothingCard(item: _items[index]);
+                              final clothingItem = _items[
+                                  index]; // Ensure this is a ClothingItem instance
+                              // print("id $clothingItem");
+                              return ClothingCard(
+                                item:
+                                    clothingItem, // Pass the instance, not the type
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ItemDetailsPage(
+                                        itemId: clothingItem.id,
+                                        item: clothingItem,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
                             },
                           ),
           ),
@@ -318,6 +336,7 @@ Future<List<ClothingItem>> fetchClothingItems() async {
 
   if (response.statusCode == 200) {
     final List<dynamic> data = jsonDecode(response.body);
+    print(data.length);
     return data.map((json) => ClothingItem.fromJson(json)).toList();
   } else {
     throw Exception('Failed to load clothing items');
