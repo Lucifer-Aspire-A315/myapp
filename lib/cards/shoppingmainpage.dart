@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/Pages/shoppingcart.dart';
+import 'package:myapp/models/cart.dart';
 import 'package:myapp/models/wishlist.dart';
 
 import '../models/cloth.dart'; // Replace with your model path
@@ -23,6 +24,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   String selectedSize = "S"; // Default selected size
   late Future<List<dynamic>> _itemDetails;
   int quantity = 1;
+  final cartItems = CartManager().cartItems;
 
   // Available and unavailable sizes
   final List<String> sizes = ["S", "M", "L", "XL", "2X", "3X", "4X"];
@@ -360,20 +362,25 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             ),
             onPressed: () {
+              CartManager().addToCart({
+                'id': widget.item.id,
+                'name': widget.item.name,
+                'price': widget.item.price,
+                'imageUrl': widget.item.imageUrl,
+                'quantity': quantity, // Pass the selected quantity
+              });
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  duration: const Duration(milliseconds: 1000),
+                  content: Text(
+                      '$quantity x ${widget.item.name} added to the cart!'),
+                ),
+              );
+
               Navigator.push(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => ShoppingCartPage(
-                          itemId: widget.itemId,
-                        )),
+                MaterialPageRoute(builder: (context) => ShoppingCartPage()),
               );
-              // Add to cart logic
-              // ScaffoldMessenger.of(context).showSnackBar(
-              //   SnackBar(
-              //     content:
-              //         Text("$quantity x ${widget.item.name} added to cart!"),
-              //   ),
-              // );
             },
             child: const Text(
               "ADD TO CART",
