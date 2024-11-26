@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/Pages/gocolors1.dart';
+import 'package:myapp/signin.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(canvasColor: Colors.white),
-      home: Home(),
+      home: LoginScreen(),
       // home: Scaffold(
       //   backgroundColor: Theme.of(context).canvasColor,
       //   body: const HomePage(), // Placeholder for your dashboard content
