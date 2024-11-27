@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/gocolors1.dart';
-import 'package:myapp/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {
@@ -21,19 +20,19 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(canvasColor: Colors.white),
-      home: FutureBuilder<bool>(
-          future: _checkLoginStatus(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return CircularProgressIndicator(); // or splash screen
-            } else if (snapshot.hasData && snapshot.data == true) {
-              return Home();
-            } else {
-              return LoginScreen();
-            }
-          },
-        ),
-      
+      home: Home(),
+      // FutureBuilder<bool>(
+      //     future: _checkLoginStatus(),
+      //     builder: (context, snapshot) {
+      //       if (snapshot.connectionState == ConnectionState.waiting) {
+      //         return CircularProgressIndicator(); // or splash screen
+      //       } else if (snapshot.hasData && snapshot.data == true) {
+      //         return Home();
+      //       } else {
+      //         return LoginScreen();
+      //       }
+      //     },
+      //   ),
     );
   }
 

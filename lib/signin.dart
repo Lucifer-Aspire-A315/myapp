@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:myapp/Pages/gocolors1.dart';
 import 'package:myapp/registration.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 // Import your MainScreen
 
 class LoginScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> checkMobileNumber(String mobile) async {
     final url = Uri.parse(
-        'http://192.168.1.10:5002/api/auth/check-mobile'); // Replace with your API URL
+        'http://192.168.1.38:5002/api/auth/check-mobile'); // Replace with your API URL
 
     try {
       // Send a POST request to check if the mobile number exists
@@ -30,16 +29,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
-        final Mobileno =data['mobileNo'];
-      // final userEmail = data['userEmail'];
+        final Mobileno = data['mobileNo'];
+        // final userEmail = data['userEmail'];
 
-    
-      
-      // await prefs.setString('exists', data['exists']);
+        // await prefs.setString('exists', data['exists']);
 
         if (data['exists'] == true) {
-          
-      
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text("Welcome")),
           );

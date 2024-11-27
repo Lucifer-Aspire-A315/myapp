@@ -7,6 +7,8 @@ import 'package:myapp/Pages/shoppingcart.dart';
 import 'package:myapp/Pages/wishlist.dart';
 import 'package:myapp/account.dart';
 import 'package:myapp/cards/shopbycolors.dart';
+import 'package:myapp/signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -23,6 +25,8 @@ class _HomeState extends State<Home> {
     'assets/images/Winter-wear-styles-Mobile_414x650.jpg',
   ];
 
+  bool isLoggedIn = false; // Track login state
+
   int _currentPage = 0;
   late final PageController _pageController;
   late final Timer _slideshowTimer;
@@ -31,6 +35,7 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _pageController = PageController();
+    _checkLoginStatus();
 
     // Timer for automatic slideshow
     _slideshowTimer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
@@ -56,6 +61,35 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
+  // Future<void> clearAllSharedPreferences() async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.clear();
+  //   print("All SharedPreferences data cleared.");
+  // }
+
+  Future<void> _checkLoginStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+    });
+  }
+
+  Future<void> _loginUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+    setState(() {
+      isLoggedIn = true;
+    });
+  }
+
+  Future<void> _logoutUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    setState(() {
+      isLoggedIn = false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // Get screen height to make widgets responsive
@@ -73,40 +107,63 @@ class _HomeState extends State<Home> {
             child: PopupMenuButton<String>(
               icon: Icon(Icons.person_outline, color: Colors.black),
               onSelected: (value) {
-                // Handle the selection here
                 if (value == 'logout') {
-                  // Example: Navigate to logout
-                  print("Logout selected");
+                  _logoutUser();
+                } else if (value == 'login') {
+                  _loginUser();
                 } else {
                   print("$value selected");
                 }
               },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                 PopupMenuItem<String>(
-                  value: 'my_account',
-                  child: Text('MY ACCOUNT'),
-                  onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MyAccountPage()),
-              ),
-                ),
-                 PopupMenuItem<String>(
-                  value: 'wishlist',
-                  onTap: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => WishlistPage()),
-              ),
-                  child: Text('WISHLIST'),
-                ),
-                const PopupMenuItem<String>(
-                  value: 'orders',
-                  child: Text('ORDERS'),
-                ),
-                const PopupMenuItem<String>(
-                  value: 'logout',
-                  child: Text('LOGOUT'),
-                ),
-              ],
+              itemBuilder: (BuildContext context) {
+                if (isLoggedIn) {
+                  // Show logged-in menu
+                  return <PopupMenuEntry<String>>[
+                    PopupMenuItem<String>(
+                      value: 'my_account',
+                      child: Text('MY ACCOUNT'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MyAccountPage()),
+                      ),
+                    ),
+                    PopupMenuItem<String>(
+                      value: 'wishlist',
+                      child: Text('WISHLIST'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => WishlistPage()),
+                      ),
+                    ),
+                    PopupMenuItem<String>(
+                      value: 'logout',
+                      child: Text('LOGOUT'),
+                      // onTap: () => clearAllSharedPreferences(),
+                    ),
+                  ];
+                } else {
+                  // Show first-time user menu
+                  return <PopupMenuEntry<String>>[
+                    PopupMenuItem<String>(
+                      value: 'login',
+                      child: Text('LOGIN/ SIGN UP'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      ),
+                    ),
+                    PopupMenuItem<String>(
+                      value: 'wishlist',
+                      child: Text('WISHLIST'),
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => WishlistPage()),
+                      ),
+                    ),
+                  ];
+                }
+              },
             ),
           ),
           IconButton(
