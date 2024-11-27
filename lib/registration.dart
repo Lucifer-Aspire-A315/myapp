@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:myapp/Pages/gocolors1.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final String Mobile;
@@ -19,6 +21,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   String? _selectedYear;
   String? _selectedMonth;
   String? _selectedDay;
+   bool _isLoading=false;
 
   late TextEditingController _mobileController;
   late TextEditingController _firstNameController;
@@ -47,49 +50,81 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future<void> registerUser() async {
-    final url = Uri.parse(
-        'http://192.168.1.38:5002/api/auth/registeration'); // Replace with your API URL
+  final url = Uri.parse('http://192.168.1.10:5002/api/auth/registeration');
 
-    // Concatenate Date of Birth from dropdowns
-    final dateOfBirth = _selectedYear != null &&
-            _selectedMonth != null &&
-            _selectedDay != null
-        ? '$_selectedYear-${_selectedMonth!.padLeft(2, '0')}-${_selectedDay!.padLeft(2, '0')}'
-        : null;
+  final dateOfBirth = _selectedYear != null &&
+          _selectedMonth != null &&
+          _selectedDay != null
+      ? '$_selectedYear-${_selectedMonth!.padLeft(2, '0')}-${_selectedDay!.padLeft(2, '0')}'
+      : null;
 
-    final body = {
-      "firstName": _firstNameController.text,
-      "lastName": _lastNameController.text,
-      "mobileNo": _mobileController.text,
-      "email": _emailController.text,
-      "password": _passwordController.text,
-      "dateOfBirth": dateOfBirth,
-      "gender": _selectedGender,
-    };
+  final body = {
+    "firstName": _firstNameController.text.trim(),
+    "lastName": _lastNameController.text.trim(),
+    "mobileNo": _mobileController.text.trim(),
+    "email": _emailController.text.trim(),
+    "password": _passwordController.text,
+    "dateOfBirth": dateOfBirth,
+    "gender": _selectedGender,
+  };
 
-    try {
-      final response = await http.post(
-        url,
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(body),
+  setState(() {
+    _isLoading = true;
+  });
+
+  try {
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode(body),
+    );
+
+    print('Response Code: ${response.statusCode}');
+    print('Response Body: ${response.body}');
+
+    if (response.statusCode == 201) {
+      final data = jsonDecode(response.body);
+      print(data);
+
+     final email = data['user']['email'] ?? ''; // Extracting email from the 'user' object
+final dob = data['user']['dateOfBirth'] ?? ''; // Extracting dateOfBirth from the 'user' object
+final firstname = data['user']['firstName'] ?? ''; // Extracting firstName from the 'user' object
+final lastname = data['user']['lastName'] ?? '';
+final Mobileno = data['user']['mobileNo'] ?? ''; // Extracting lastName from the 'user' object
+
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', email);
+      await prefs.setString('dob', dob);
+      await prefs.setString('firstname', firstname);
+      await prefs.setString('lastname', lastname);
+      await prefs.setString('Mobileno', Mobileno);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registration Successful!')),
       );
 
-      if (response.statusCode == 201) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration Successful!')),
-        );
-      } else {
-        final error = jsonDecode(response.body);
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${error['msg']}')),
-        );
-      }
-    } catch (e) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => Home()),
+      );
+    } else {
+      final error = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to register. Please try again.')),
+        SnackBar(content: Text('Error: ${error['msg']}')),
       );
     }
+  } catch (e) {
+    print('Error during registration: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Failed to register. Please try again.')),
+    );
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {

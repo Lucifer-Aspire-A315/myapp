@@ -40,7 +40,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
   Future<List<dynamic>> fetchItemImages(int itemId) async {
     final response = await http.get(
-      Uri.parse('http://192.168.1.38:5002/api/auth/clothing-item/$itemId'),
+      Uri.parse('http://192.168.1.10:5002/api/auth/clothing-item/$itemId'),
     );
 
     if (response.statusCode == 200) {

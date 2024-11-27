@@ -5,6 +5,7 @@ import 'package:myapp/Pages/Category.dart';
 import 'package:myapp/Pages/clothing.dart';
 import 'package:myapp/Pages/shoppingcart.dart';
 import 'package:myapp/Pages/wishlist.dart';
+import 'package:myapp/account.dart';
 import 'package:myapp/cards/shopbycolors.dart';
 
 class Home extends StatefulWidget {
@@ -68,9 +69,45 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.white,
         elevation: 0,
         actions: [
-          IconButton(
-            icon: const Icon(Icons.person_outline, color: Colors.black),
-            onPressed: () {},
+          Center(
+            child: PopupMenuButton<String>(
+              icon: Icon(Icons.person_outline, color: Colors.black),
+              onSelected: (value) {
+                // Handle the selection here
+                if (value == 'logout') {
+                  // Example: Navigate to logout
+                  print("Logout selected");
+                } else {
+                  print("$value selected");
+                }
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                 PopupMenuItem<String>(
+                  value: 'my_account',
+                  child: Text('MY ACCOUNT'),
+                  onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyAccountPage()),
+              ),
+                ),
+                 PopupMenuItem<String>(
+                  value: 'wishlist',
+                  onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => WishlistPage()),
+              ),
+                  child: Text('WISHLIST'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'orders',
+                  child: Text('ORDERS'),
+                ),
+                const PopupMenuItem<String>(
+                  value: 'logout',
+                  child: Text('LOGOUT'),
+                ),
+              ],
+            ),
           ),
           IconButton(
             icon: const Icon(Icons.favorite_border, color: Colors.black),
