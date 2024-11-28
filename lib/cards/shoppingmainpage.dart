@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:myapp/Pages/shoppingcart.dart';
 import 'package:myapp/models/cart.dart';
 import 'package:myapp/models/wishlist.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/cloth.dart'; // Replace with your model path
 
@@ -20,11 +21,17 @@ class ItemDetailsPage extends StatefulWidget {
 }
 
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
-  late bool isInWishlist;
+   bool isInWishlist=false;
   String selectedSize = "S"; // Default selected size
   late Future<List<dynamic>> _itemDetails;
   int quantity = 1;
-  final cartItems = CartManager().cartItems;
+   String email = '';
+  String mobileNumber = '';
+  String name = '';
+  String dob = '';
+  String mob = '';
+  int id=0;
+
 
   // Available and unavailable sizes
   final List<String> sizes = ["S", "M", "L", "XL", "2X", "3X", "4X"];
@@ -34,8 +41,21 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   void initState() {
     super.initState();
     // Synchronize the state with WishlistManager
-    isInWishlist = WishlistManager().wishlist.contains(widget.item);
+    // isInWishlist = WishlistManager().wishlist.contains(widget.item);
     _itemDetails = fetchItemImages(widget.itemId);
+    _loadUserData();
+  }
+
+   Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      email = prefs.getString('email') ?? 'Not Available';
+      mobileNumber = prefs.getString('Mobileno') ?? 'Not Available';
+      name = prefs.getString('firstname') ?? 'Not Available';
+      dob = prefs.getString('dob') ?? 'Not Available';
+      mob = prefs.getString('Mobileno') ?? 'Not Available';
+       id = prefs.getInt('id') ?? 0;
+    });
   }
 
   Future<List<dynamic>> fetchItemImages(int itemId) async {
@@ -59,27 +79,64 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     }
   }
 
-  void toggleWishlist() {
-    if (isInWishlist) {
-      WishlistManager().removeFromWishlist(widget.item);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${widget.item.name} removed from wishlist!'),
-        ),
-      );
-    } else {
-      WishlistManager().addToWishlist(widget.item);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('${widget.item.name} added to wishlist!'),
-        ),
-      );
-    }
+  void addToWishlist() async {
+  final userId = id; // Replace with actual user ID
+  final url = Uri.parse('http://192.168.1.10:5002/api/auth/add');
+  final response = await http.post(
+    url,
+    headers: {'Content-Type': 'application/json'},
+    body: jsonEncode({
+      'Id': userId,
+      'itemId': widget.item.id,
+      'name': widget.item.name,
+      'price': widget.item.price,
+      'imageUrl': widget.item.imageUrl,
+    }),
+  );
+
+  if (response.statusCode == 200) {
+    print(response.body);
+    // Success
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('${widget.item.name} added to wishlist!'),
+      ),
+    );
     setState(() {
-      // Synchronize the state
-      isInWishlist = WishlistManager().wishlist.contains(widget.item);
+      isInWishlist = true;
     });
+  } else {
+    // Handle error
+    final error = jsonDecode(response.body)['message'];
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Error: $error'),
+      ),
+    );
   }
+}
+
+  // void toggleWishlist() {
+  //   if (isInWishlist) {
+  //     WishlistManager().removeFromWishlist(widget.item);
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('${widget.item.name} removed from wishlist!'),
+  //       ),
+  //     );
+  //   } else {
+  //     WishlistManager().addToWishlist(widget.item);
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text('${widget.item.name} added to wishlist!'),
+  //       ),
+  //     );
+  //   }
+  //   setState(() {
+  //     // Synchronize the state
+  //     isInWishlist = WishlistManager().wishlist.contains(widget.item);
+  //   });
+  // }
 
   void showSizeGuide(BuildContext context) {
     // Display a dialog with size guide information
@@ -304,7 +361,10 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
             child: CircleAvatar(
               backgroundColor: Colors.white,
               child: IconButton(
-                onPressed: toggleWishlist, // Toggle wishlist on press
+                onPressed: () => {
+                  addToWishlist(),
+                },
+                 // Toggle wishlist on press
                 icon: Icon(
                   Icons.favorite,
                   color: isInWishlist
@@ -362,20 +422,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             ),
             onPressed: () {
-              CartManager().addToCart({
-                'id': widget.item.id,
-                'name': widget.item.name,
-                'price': widget.item.price,
-                'imageUrl': widget.item.imageUrl,
-                'quantity': quantity, // Pass the selected quantity
-              });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  duration: const Duration(milliseconds: 1000),
-                  content: Text(
-                      '$quantity x ${widget.item.name} added to the cart!'),
-                ),
-              );
+             
 
               Navigator.push(
                 context,

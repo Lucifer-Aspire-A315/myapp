@@ -61,11 +61,11 @@ class _HomeState extends State<Home> {
     super.dispose();
   }
 
-  // Future<void> clearAllSharedPreferences() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   await prefs.clear();
-  //   print("All SharedPreferences data cleared.");
-  // }
+  Future<void> clearAllSharedPreferences() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    print("All SharedPreferences data cleared.");
+  }
 
   Future<void> _checkLoginStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -139,7 +139,7 @@ class _HomeState extends State<Home> {
                     PopupMenuItem<String>(
                       value: 'logout',
                       child: Text('LOGOUT'),
-                      // onTap: () => clearAllSharedPreferences(),
+                       onTap: () => clearAllSharedPreferences(),
                     ),
                   ];
                 } else {

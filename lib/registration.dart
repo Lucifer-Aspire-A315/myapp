@@ -50,7 +50,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future<void> registerUser() async {
-    final url = Uri.parse('http://192.168.1.38:5002/api/auth/registeration');
+    final url = Uri.parse('http://192.168.1.10:5002/api/auth/registeration');
 
     final dateOfBirth = _selectedYear != null &&
             _selectedMonth != null &&
@@ -95,6 +95,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         final lastname = data['user']['lastName'] ?? '';
         final Mobileno = data['user']['mobileNo'] ??
             ''; // Extracting lastName from the 'user' object
+            final id = data['user']['id'] ?? '';
 
         final prefs = await SharedPreferences.getInstance();
         await prefs.setString('email', email);
@@ -102,6 +103,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         await prefs.setString('firstname', firstname);
         await prefs.setString('lastname', lastname);
         await prefs.setString('Mobileno', Mobileno);
+        await prefs.setInt('id', id);
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Registration Successful!')),
