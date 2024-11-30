@@ -21,17 +21,16 @@ class ItemDetailsPage extends StatefulWidget {
 }
 
 class _ItemDetailsPageState extends State<ItemDetailsPage> {
-   bool isInWishlist=false;
+  bool isInWishlist = false;
   String selectedSize = "S"; // Default selected size
   late Future<List<dynamic>> _itemDetails;
   int quantity = 1;
-   String email = '';
+  String email = '';
   String mobileNumber = '';
   String name = '';
   String dob = '';
   String mob = '';
-  int id=0;
-
+  int id = 0;
 
   // Available and unavailable sizes
   final List<String> sizes = ["S", "M", "L", "XL", "2X", "3X", "4X"];
@@ -46,7 +45,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
     _loadUserData();
   }
 
-   Future<void> _loadUserData() async {
+  Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       email = prefs.getString('email') ?? 'Not Available';
@@ -54,7 +53,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
       name = prefs.getString('firstname') ?? 'Not Available';
       dob = prefs.getString('dob') ?? 'Not Available';
       mob = prefs.getString('Mobileno') ?? 'Not Available';
-       id = prefs.getInt('id') ?? 0;
+      id = prefs.getInt('id') ?? 0;
     });
   }
 
@@ -80,41 +79,79 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
   }
 
   void addToWishlist() async {
-  final userId = id; // Replace with actual user ID
-  final url = Uri.parse('http://192.168.1.10:5002/api/auth/add');
-  final response = await http.post(
-    url,
-    headers: {'Content-Type': 'application/json'},
-    body: jsonEncode({
-      'Id': userId,
-      'itemId': widget.item.id,
-      'name': widget.item.name,
-      'price': widget.item.price,
-      'imageUrl': widget.item.imageUrl,
-    }),
-  );
+    final userId = id; // Replace with actual user ID
+    final url = Uri.parse('http://192.168.1.10:5002/api/auth/add');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'Id': userId,
+        'itemId': widget.item.id,
+        'name': widget.item.name,
+        'price': widget.item.price,
+        'imageUrl': widget.item.imageUrl,
+      }),
+    );
 
-  if (response.statusCode == 200) {
-    print(response.body);
-    // Success
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('${widget.item.name} added to wishlist!'),
-      ),
-    );
-    setState(() {
-      isInWishlist = true;
-    });
-  } else {
-    // Handle error
-    final error = jsonDecode(response.body)['message'];
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Error: $error'),
-      ),
-    );
+    if (response.statusCode == 200) {
+      print(response.body);
+      // Success
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${widget.item.name} added to wishlist!'),
+        ),
+      );
+      setState(() {
+        isInWishlist = true;
+      });
+    } else {
+      // Handle error
+      final error = jsonDecode(response.body)['message'];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $error'),
+        ),
+      );
+    }
   }
-}
+
+  void addToCart() async {
+    final userId = id; // Replace with actual user ID
+    final url = Uri.parse('http://192.168.1.10:5002/api/auth/addcart');
+    final response = await http.post(
+      url,
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'Id': userId,
+        'itemId': widget.item.id,
+        'name': widget.item.name,
+        'price': widget.item.price,
+        'imageUrl': widget.item.imageUrl,
+        'quantity':quantity,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      print(response.body);
+      // Success
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${widget.item.name} added to cart!'),
+        ),
+      );
+      setState(() {
+        isInWishlist = true;
+      });
+    } else {
+      // Handle error
+      final error = jsonDecode(response.body)['message'];
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: $error'),
+        ),
+      );
+    }
+  }
 
   // void toggleWishlist() {
   //   if (isInWishlist) {
@@ -364,7 +401,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                 onPressed: () => {
                   addToWishlist(),
                 },
-                 // Toggle wishlist on press
+                // Toggle wishlist on press
                 icon: Icon(
                   Icons.favorite,
                   color: isInWishlist
@@ -422,12 +459,11 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             ),
             onPressed: () {
-             
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ShoppingCartPage()),
-              );
+              addToCart();
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => ShoppingCartPage()),
+              // );
             },
             child: const Text(
               "ADD TO CART",

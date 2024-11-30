@@ -14,7 +14,7 @@ class ClothingItem {
   });
 
   factory ClothingItem.fromJson(Map<String, dynamic> json) {
-    final dynamic idFromJson = json['id'] ?? json['itemId'];
+    final dynamic idFromJson = json['id'] ?? json['itemId']?? json['quantity'];
     
     return ClothingItem(
       
