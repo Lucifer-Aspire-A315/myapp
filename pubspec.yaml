@@ -89,8 +89,10 @@ flutter:
     - assets/images/photo.jpg
     - assets/images/th.jpg
     - assets/images/shopping.jpg
-    
+    - assets/images/logo.webp
+    - assets/images/shopping-bag.png
     - assets/images/heart.png
+    - assets/images/people.png
     - assets/images/home-page.png
     - assets/images/message.png
     - assets/images/user.png
