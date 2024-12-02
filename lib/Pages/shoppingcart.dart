@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -60,7 +61,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   }
 
   Future<List<ClothingItem>> fetchCartItems() async {
-    final url = Uri.parse('http://192.168.1.38:5002/api/auth/cartuser/$id');
+    final url = Uri.parse('http://192.168.1.10:5002/api/auth/cartuser/$id');
 
     final response = await http.get(url);
 
@@ -86,7 +87,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   }
 
   void removeFromCart(ClothingItem item) async {
-    final url = Uri.parse('http://192.168.1.38:5002/api/auth/removecart');
+    final url = Uri.parse('http://192.168.1.10:5002/api/auth/removecart');
 
     final response = await http.delete(
       url,

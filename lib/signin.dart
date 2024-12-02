@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> checkMobileNumber(String mobile) async {
     final url = Uri.parse(
-        'http://192.168.1.38:5002/api/auth/check-mobile'); // Replace with your API URL
+        'http://192.168.1.10:5002/api/auth/check-mobile'); // Replace with your API URL
 
     try {
       // Send a POST request to check if the mobile number exists

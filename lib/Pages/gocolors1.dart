@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/Category.dart';
@@ -6,9 +7,12 @@ import 'package:myapp/Pages/clothing.dart';
 import 'package:myapp/Pages/shoppingcart.dart';
 import 'package:myapp/Pages/wishlist.dart';
 import 'package:myapp/account.dart';
+import 'package:myapp/cards/clothingCard.dart';
 import 'package:myapp/cards/shopbycolors.dart';
+import 'package:myapp/models/cloth.dart';
 import 'package:myapp/signin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -29,7 +33,11 @@ class _HomeState extends State<Home> {
 
   int _currentPage = 0;
   late final PageController _pageController;
+  
   late final Timer _slideshowTimer;
+
+  List<ClothingItem> items=[];
+  bool isSearching=false;
 
   @override
   void initState() {
@@ -39,19 +47,22 @@ class _HomeState extends State<Home> {
 
     // Timer for automatic slideshow
     _slideshowTimer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
-      setState(() {
-        if (_currentPage < _slideshowImages.length - 1) {
-          _currentPage++;
-        } else {
-          _currentPage = 0;
-        }
-        _pageController.animateToPage(
-          _currentPage,
-          duration: Duration(milliseconds: 300),
-          curve: Curves.easeIn,
-        );
-      });
+  if (_pageController.hasClients) { // Check if the PageController is attached
+    setState(() {
+      if (_currentPage < _slideshowImages.length - 1) {
+        _currentPage++;
+      } else {
+        _currentPage = 0;
+      }
+      _pageController.animateToPage(
+        _currentPage,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeIn,
+      );
     });
+  }
+});
+
   }
 
   @override
@@ -90,11 +101,43 @@ class _HomeState extends State<Home> {
     });
   }
 
+  Future<void> fetchitems(String query) async {
+  final url = Uri.parse("http://192.168.1.10:5002/api/auth/items?search=$query");
+  try {
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData = json.decode(response.body); // Decode the JSON response
+      final List<ClothingItem> data = jsonData
+          .map((json) => ClothingItem.fromJson(json)) // Map each item to ClothingItem
+          .toList();
+      print(data); // Print the parsed items
+      setState(() {
+        items = data; // Update the items state variable
+      });
+    } else {
+      throw Exception("Failed to fetch items");
+    }
+  } catch (e) {
+    print("Error: $e");
+  }
+}
+
+
   @override
   Widget build(BuildContext context) {
     // Get screen height to make widgets responsive
     final screenHeight = MediaQuery.of(context).size.height;
     final appBarHeight = kToolbarHeight;
+     final screenWidth = MediaQuery.of(context).size.width;
+
+    // Calculate the number of items per row dynamically
+    int crossAxisCount = screenWidth < 600
+        ? 2
+        : screenWidth < 1200
+            ? 3
+            : 4;
+    
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -204,75 +247,116 @@ class _HomeState extends State<Home> {
                   fillColor: Colors.white,
                   filled: true,
                 ),
+                onChanged: (query){
+                  if (query.isNotEmpty) {
+                    fetchitems(query);
+                    setState(() {
+                      isSearching = true;
+                    });
+                  } else {
+                    setState(() {
+                      isSearching = false;
+                    });
+                  }
+
+                }
+
               ),
             ),
-            const SizedBox(height: 10),
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 230, 221, 221),
+            if (isSearching)
+              items.isEmpty
+                  ?  Center(child: Text("No results found"))
+                  : GridView.builder(
+                            padding: EdgeInsets.all(16.0),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: crossAxisCount,
+                              crossAxisSpacing: 5,
+                              mainAxisSpacing: 5,
+                              childAspectRatio: 0.55,
+                            ),
+                            itemCount: items.length,
+                            itemBuilder: (context, index) {
+                              final clothingItem = items[
+                                  index]; // Ensure this is a ClothingItem instance
+                              // print("id $clothingItem");
+                              return ClothingCard(
+                                item:
+                                    clothingItem, // Pass the instance, not the type
+                                // onTap: () {
+                                //   Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //       builder: (context) => ItemDetailsPage(
+                                //         itemId: clothingItem.id,
+                                //         item: clothingItem,
+                                //       ),
+                                //     ),
+                                //   );
+                                // },
+                              );
+                            },
+                          )
+      
+                         else...[
+              Column(
+                children: [
+                  const SizedBox(height: 10),
+                  Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 230, 221, 221),
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            showColorsSection = true;
+                          });
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              'assets/images/color-wheel.png',
+                              width: 24,
+                              height: 24,
+                            ),
+                            const SizedBox(width: 8),
+                            const Text(
+                              'SHOP BY COLOR',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        showColorsSection = true; // Show colors section
-                      });
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: screenHeight * 0.15,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
                       children: [
-                        Image.asset(
-                          'assets/images/color-wheel.png', // Replace with your image path
-                          width: 24, // Set image width
-                          height: 24, // Set image height
+                        GestureDetector(
+                          child: CategoryItem(
+                              'Leggings & Churidar', "assets/images/Top_Scroll_Circle_Product_Icon-01.jpg"),
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => ClothingListPage()),
+                          ),
                         ),
-                        const SizedBox(
-                            width: 8), // Space between image and text
-                        const Text(
-                          'SHOP BY COLOR',
-                          style: TextStyle(color: Colors.black),
-                        ),
+                        CategoryItem(
+                            'Ethnicwear', "assets/images/Top_Scroll_Circle_Product_Icon-02.jpg"),
+                        CategoryItem(
+                            'Casualwear Lounge', "assets/images/Top_Scroll_Circle_Product_Icon-04.jpg"),
+                        CategoryItem(
+                            'Jeans & Jeggings', "assets/images/Top_Scroll_Circle_Product_Icon-05.jpg"),
+                        CategoryItem(
+                            'Formalwear', "assets/images/Top_Scroll_Circle_Product_Icon-06.jpg"),
                       ],
                     ),
                   ),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            SizedBox(
-              height: screenHeight * 0.15, // Increased height
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  GestureDetector(
-                    child: CategoryItem('Leggings & Churidar',
-                        "assets/images/Top_Scroll_Circle_Product_Icon-01.jpg"),
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ClothingListPage()),
-                    ),
-                  ),
-                  CategoryItem('Ethnicwear',
-                      "assets/images/Top_Scroll_Circle_Product_Icon-02.jpg"),
-                  CategoryItem('Casualwear Lounge',
-                      "assets/images/Top_Scroll_Circle_Product_Icon-04.jpg"),
-                  CategoryItem('Jeans & Jeggings',
-                      "assets/images/Top_Scroll_Circle_Product_Icon-05.jpg"),
-                  CategoryItem('Formalwear',
-                      "assets/images/Top_Scroll_Circle_Product_Icon-06.jpg"),
-                  CategoryItem('Loungewear',
-                      "assets/images/Top_Scroll_Circle_Product_Icon-07.jpg"),
-                  CategoryItem('Activewear',
-                      "assets/images/Top_Scroll_Circle_Product_Icon-08.jpg"),
-                  CategoryItem('Winterwear',
-                      "assets/images/Top_Scroll_Circle_Product_Icon-09.jpg"),
-                ],
-              ),
-            ),
             Row(
               children: [
                 TextButton(
@@ -558,8 +642,13 @@ class _HomeState extends State<Home> {
               )
             ],
           ],
+                         
+          
         ),
+          ]
+      
+          ]
       ),
-    );
+    ));
   }
 }
