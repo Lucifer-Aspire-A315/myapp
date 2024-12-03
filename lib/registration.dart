@@ -50,7 +50,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   Future<void> registerUser() async {
-    final url = Uri.parse('http://192.168.1.38:5002/api/auth/registeration');
+    final url = Uri.parse('http://192.168.1.10:5002/api/auth/registeration');
 
     final dateOfBirth = _selectedYear != null &&
             _selectedMonth != null &&

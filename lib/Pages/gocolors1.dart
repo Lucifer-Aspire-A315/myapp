@@ -11,7 +11,9 @@ import 'package:myapp/account.dart';
 import 'package:myapp/cards/clothingCard.dart';
 import 'package:myapp/cards/shopbycolors.dart';
 import 'package:myapp/models/cloth.dart';
+import 'package:myapp/models/countmodel.dart';
 import 'package:myapp/signin.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatefulWidget {
@@ -53,7 +55,9 @@ class _HomeState extends State<Home> {
     _pageController = PageController();
     _checkLoginStatus();
 
-    numbers();
+    setState(() {
+      numbers();
+    });
 
     // Timer for automatic slideshow
     _slideshowTimer = Timer.periodic(Duration(seconds: 3), (Timer timer) {
@@ -119,17 +123,29 @@ class _HomeState extends State<Home> {
     });
   }
 
+  Future<void> fetchnumbers() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', false);
+    setState(() {
+      isLoggedIn = false;
+    });
+  }
+
   Future<void> numbers() async {
     await _loadUserData();
-    final url = Uri.parse("http://192.168.1.38:5002/api/auth/counts/$id");
+    final url = Uri.parse("http://192.168.1.10:5002/api/auth/counts/$id");
     try {
       final response = await http.get(url);
 
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body);
         cartcount = data['data']['cartitems_count'];
+        Provider.of<CartProvider>(context, listen: false)
+            .updateCartCount(cartcount);
         print(cartcount);
         wishcount = data['data']['wishlist_count'];
+        Provider.of<CartProvider>(context, listen: false)
+            .updatewishlistCount(wishcount);
         // final List<dynamic> jsonData =
         //     json.decode(response.body); // Decode the JSON response
         // final List<dynamic> data =jsonData;
@@ -147,7 +163,7 @@ class _HomeState extends State<Home> {
 
   Future<void> fetchitems(String query) async {
     final url =
-        Uri.parse("http://192.168.1.38:5002/api/auth/items?search=$query");
+        Uri.parse("http://192.168.1.10:5002/api/auth/items?search=$query");
     try {
       final response = await http.get(url);
 
@@ -267,9 +283,13 @@ class _HomeState extends State<Home> {
             Stack(
               children: [
                 Positioned(
-                  child: Text(
-                    "$wishcount",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Consumer<CartProvider>(
+                    builder: (context, cartProvider, child) {
+                      return Text(
+                        "${cartProvider.wishlistcount}",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      );
+                    },
                   ),
                   top: 15,
                   left: 20,
@@ -280,10 +300,14 @@ class _HomeState extends State<Home> {
                     height: 30,
                   ),
                   onPressed: () {
-                    Navigator.push(
+                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => WishlistPage()),
-                    );
+                      MaterialPageRoute(
+                        builder: (context) => WishlistPage(),
+                      ),
+                    ).then((_) {
+                      numbers(); // Refresh the cart count when returning
+                    });
                   },
                 ),
               ],
@@ -291,9 +315,13 @@ class _HomeState extends State<Home> {
             Stack(
               children: [
                 Positioned(
-                  child: Text(
-                    "$cartcount",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  child: Consumer<CartProvider>(
+                    builder: (context, cartProvider, child) {
+                      return Text(
+                        "${cartProvider.cartCount}",
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      );
+                    },
                   ),
                   top: 18,
                   left: 20,
@@ -312,8 +340,17 @@ class _HomeState extends State<Home> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ShoppingCartPage()),
-                    );
+                        builder: (context) => ShoppingCartPage(),
+                      ),
+                    ).then((_) {
+                      numbers(); // Refresh the cart count when returning
+                    });
+
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //       builder: (context) => ShoppingCartPage()),
+                    // );
                   },
                 ),
               ],

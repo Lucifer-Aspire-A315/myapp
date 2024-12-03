@@ -42,7 +42,7 @@ class _WishlistPageState extends State<WishlistPage> {
   Future<List<ClothingItem>> fetchWishlistItems() async {
     final userId =
         id; // Replace with the actual user ID or retrieve it dynamically
-    final url = Uri.parse('http://192.168.1.38:5002/api/auth/user/$userId');
+    final url = Uri.parse('http://192.168.1.10:5002/api/auth/user/$userId');
 
     final response = await http.get(url);
 
@@ -72,7 +72,7 @@ class _WishlistPageState extends State<WishlistPage> {
       return;
     }
     final userId = id;
-    final url = Uri.parse('http://192.168.1.38:5002/api/auth/remove');
+    final url = Uri.parse('http://192.168.1.10:5002/api/auth/remove');
 
     final response = await http.delete(
       url,

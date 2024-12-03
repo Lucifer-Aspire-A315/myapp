@@ -332,7 +332,7 @@ class _ClothingListPageState extends State<ClothingListPage> {
 
 Future<List<ClothingItem>> fetchClothingItems() async {
   final response = await http
-      .get(Uri.parse('http://192.168.1.38:5002/api/auth/clothing-item'));
+      .get(Uri.parse('http://192.168.1.10:5002/api/auth/clothing-item'));
 
   if (response.statusCode == 200) {
     final List<dynamic> data = jsonDecode(response.body);
