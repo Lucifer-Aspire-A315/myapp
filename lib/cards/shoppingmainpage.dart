@@ -79,7 +79,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
   void addToWishlist() async {
     final userId = id; // Replace with actual user ID
-    final url = Uri.parse('http://192.168.1.10:5002/api/auth/add');
+    final url = Uri.parse('http://192.168.1.35:5002/api/auth/add');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -120,7 +120,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
   void addToCart() async {
     final userId = id; // Replace with actual user ID
-    final url = Uri.parse('http://192.168.1.10:5002/api/auth/addcart');
+    final url = Uri.parse('http://192.168.1.35:5002/api/auth/addcart');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},

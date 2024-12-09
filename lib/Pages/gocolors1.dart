@@ -133,7 +133,7 @@ class _HomeState extends State<Home> {
 
   Future<void> numbers() async {
     await _loadUserData();
-    final url = Uri.parse("http://192.168.1.10:5002/api/auth/counts/$id");
+    final url = Uri.parse("http://192.168.1.35:5002/api/auth/counts/$id");
     try {
       final response = await http.get(url);
 
@@ -163,7 +163,7 @@ class _HomeState extends State<Home> {
 
   Future<void> fetchitems(String query) async {
     final url =
-        Uri.parse("http://192.168.1.10:5002/api/auth/items?search=$query");
+        Uri.parse("http://192.168.1.35:5002/api/auth/items?search=$query");
     try {
       final response = await http.get(url);
 
