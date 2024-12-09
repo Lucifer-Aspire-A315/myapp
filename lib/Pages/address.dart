@@ -11,6 +11,7 @@ class _AddressState extends State<Address> {
   String? selectedCountry;
   String? selectedState;
   String? selectedCity;
+  bool istap = false;
 
   // Sample data for countries, states, and cities
   final Map<String, List<String>> countryStateData = {
@@ -50,60 +51,63 @@ class _AddressState extends State<Address> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20), // Equal padding from all sides
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Buttons
-              GestureDetector(
-                onTap: () {
-                  print("Add A New Address clicked");
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Add A New Address",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            // Buttons
+            GestureDetector(
+              onTap: () {
+                print("Add A New Address clicked");
+                setState(() {
+                  istap = true;
+                });
+              },
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Text(
+                    "Add A New Address",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 20), // Spacing between buttons
-              GestureDetector(
-                onTap: () {
-                  print("Return To Orders clicked");
-                },
-                child: Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.symmetric(vertical: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: Center(
-                    child: Text(
-                      "Return To Orders",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
+            ),
+            SizedBox(height: 20), // Spacing between buttons
+            GestureDetector(
+              onTap: () {
+                print("Return To Orders clicked");
+              },
+              child: Container(
+                width: double.infinity,
+                padding: EdgeInsets.symmetric(vertical: 20),
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: Center(
+                  child: Text(
+                    "Return To Orders",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 30), // Space between buttons and form
+            ),
+            SizedBox(height: 30), // Space between buttons and form
 
-              // Form
+            // Form
+            if (istap) ...[
               Text(
                 "Add a New Address",
                 style: TextStyle(
@@ -111,12 +115,12 @@ class _AddressState extends State<Address> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              SizedBox(height: 20),
-              buildTextField("First Name"),
-              SizedBox(height: 16),
-              buildTextField("Last Name"),
-              SizedBox(height: 16),
-              buildTextField("Company"),
+              // SizedBox(height: 20),
+              // buildTextField("First Name"),
+              // SizedBox(height: 16),
+              // buildTextField("Last Name"),
+              // SizedBox(height: 16),
+              // buildTextField("Company"),
               SizedBox(height: 16),
               buildTextField("Address1"),
               SizedBox(height: 16),
@@ -232,7 +236,7 @@ class _AddressState extends State<Address> {
               SizedBox(height: 16),
               buildTextField("mobile number"),
             ],
-          ),
+          ]),
         ),
       ),
     );
@@ -240,7 +244,8 @@ class _AddressState extends State<Address> {
 
   // Function to build each TextField
   Widget buildTextField(String labelText) {
-    return Column(
+    return Container(
+        child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
@@ -261,6 +266,6 @@ class _AddressState extends State<Address> {
           ),
         ),
       ],
-    );
+    ));
   }
 }
