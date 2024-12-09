@@ -165,8 +165,6 @@
 //   }
 // }
 
-
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -186,7 +184,8 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isLoading = false; // Loading state
 
   Future<void> checkMobileNumber(String mobile) async {
-    final url = Uri.parse('http://192.168.1.10:5002/api/auth/check-mobile'); // Replace with your API URL
+    final url = Uri.parse(
+        'http://192.168.1.35:5002/api/auth/check-mobile'); // Replace with your API URL
 
     setState(() {
       _isLoading = true; // Start loading
@@ -294,7 +293,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             checkMobileNumber(mobileController.text);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text("Please enter a valid phone number.")),
+                              SnackBar(
+                                  content: Text(
+                                      "Please enter a valid phone number.")),
                             );
                           }
                         },

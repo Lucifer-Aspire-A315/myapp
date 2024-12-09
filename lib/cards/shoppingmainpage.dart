@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:myapp/Pages/shoppingcart.dart';
 import 'package:myapp/models/countmodel.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -59,7 +58,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
   Future<List<dynamic>> fetchItemImages(int itemId) async {
     final response = await http.get(
-      Uri.parse('http://192.168.1.10:5002/api/auth/clothing-item/$itemId'),
+      Uri.parse('http://192.168.1.35:5002/api/auth/clothing-item/$itemId'),
     );
 
     if (response.statusCode == 200) {
@@ -80,7 +79,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
   void addToWishlist() async {
     final userId = id; // Replace with actual user ID
-    final url = Uri.parse('http://192.168.1.10:5002/api/auth/add');
+    final url = Uri.parse('http://192.168.1.35:5002/api/auth/add');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -95,10 +94,11 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
     if (response.statusCode == 200) {
       print(response.body);
-      final responseBody=jsonDecode(response.body);
-       final updatedWishlistCount = responseBody['wishlist_count'];
-       print(updatedWishlistCount);
-        Provider.of<CartProvider>(context, listen: false).updatewishlistCount(updatedWishlistCount);
+      final responseBody = jsonDecode(response.body);
+      final updatedWishlistCount = responseBody['wishlist_count'];
+      print(updatedWishlistCount);
+      Provider.of<CartProvider>(context, listen: false)
+          .updatewishlistCount(updatedWishlistCount);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${widget.item.name} added to wishlist!'),
@@ -120,7 +120,7 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
   void addToCart() async {
     final userId = id; // Replace with actual user ID
-    final url = Uri.parse('http://192.168.1.10:5002/api/auth/addcart');
+    final url = Uri.parse('http://192.168.1.35:5002/api/auth/addcart');
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
@@ -136,10 +136,11 @@ class _ItemDetailsPageState extends State<ItemDetailsPage> {
 
     if (response.statusCode == 200) {
       print(response.body);
-      final responseBody=jsonDecode(response.body);
-       final updatedcartCount = responseBody['cartCount'];
-       print(updatedcartCount);
-        Provider.of<CartProvider>(context, listen: false).updateCartCount(updatedcartCount);
+      final responseBody = jsonDecode(response.body);
+      final updatedcartCount = responseBody['cartCount'];
+      print(updatedcartCount);
+      Provider.of<CartProvider>(context, listen: false)
+          .updateCartCount(updatedcartCount);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('${widget.item.name} added to cart!'),

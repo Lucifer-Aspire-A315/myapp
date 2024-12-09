@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myapp/Pages/address.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAccountPage extends StatefulWidget {
@@ -26,7 +27,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
       mobileNumber = prefs.getString('Mobileno') ?? 'Not Available';
       name = prefs.getString('firstname') ?? 'Not Available';
       dob = prefs.getString('dob') ?? 'Not Available';
-      mob = prefs.getString('Mobileno') ?? 'Not Available';
+      mob = prefs.getString('mobileNo') ?? 'Not Available';
     });
   }
 
@@ -149,6 +150,88 @@ class _MyAccountPageState extends State<MyAccountPage> {
                 Text(dob, style: TextStyle(fontSize: 14)),
               ],
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Divider(),
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "ADDRESS",
+                  style: TextStyle(fontSize: 20),
+                )
+              ],
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      // Action for "ADD A NEW ADDRESS"
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Address()));
+                      print("Add a New Address button clicked");
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 25),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.black, width: 1),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "ADD A NEW",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          Text(
+                            "ADDRESS",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 20), // Space between buttons
+                  GestureDetector(
+                    onTap: () {
+                      // Action for "EDIT ADDRESSES"
+                      print("Edit Addresses button clicked");
+                    },
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(5),
+                        border: Border.all(color: Colors.black, width: 1),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            "EDIT",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                          Text(
+                            "ADDRESSES",
+                            style: TextStyle(fontSize: 16, color: Colors.black),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            )
           ],
         ),
       ),
