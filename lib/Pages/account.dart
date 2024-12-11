@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:myapp/Pages/address.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -103,7 +102,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.1.10:5002/api/auth/saveaddress'), // Replace with your API URL
+            'http://192.168.1.35:5002/api/auth/saveaddress'), // Replace with your API URL
         headers: {'Content-Type': 'application/json'},
         body: json.encode(body),
       );
@@ -269,7 +268,6 @@ class _MyAccountPageState extends State<MyAccountPage> {
                     onTap: () {
                       // Action for "ADD A NEW ADDRESS"
                       Navigator.push(context,
-
                           MaterialPageRoute(builder: (context) => Address()));
                       // showMaterialModalBottomSheet(
                       //   shape: const RoundedRectangleBorder(

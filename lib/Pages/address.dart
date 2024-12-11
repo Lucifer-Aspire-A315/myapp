@@ -1,278 +1,13 @@
-// import 'package:flutter/material.dart';
-
-// class Address extends StatefulWidget {
-//   const Address({super.key});
-
-//   @override
-//   State<Address> createState() => _AddressState();
-// }
-
-// class _AddressState extends State<Address> {
-//   String? selectedCountry;
-//   String? selectedState;
-//   String? selectedCity;
-//   bool istap = false;
-
-//   // Sample data for countries, states, and cities
-//   final Map<String, List<String>> countryStateData = {
-//     'India': ['Maharashtra', 'Gujarat', 'Rajasthan'],
-//     'USA': ['California', 'New York', 'Texas'],
-//     'Canada': ['Ontario', 'Quebec', 'Alberta'],
-//     'Australia': ['Victoria', 'Queensland', 'Tasmania'],
-//     'Germany': ['Bavaria', 'Berlin', 'Hamburg'],
-//     'France': ['Ile-de-France', 'Provence', 'Normandy'],
-//     'Italy': ['Lombardy', 'Veneto', 'Sicily'],
-//     'UK': ['England', 'Scotland', 'Wales'],
-//     'Japan': ['Tokyo', 'Osaka', 'Kyoto'],
-//     'China': ['Beijing', 'Shanghai', 'Shenzhen'],
-//   };
-
-//   final Map<String, List<String>> stateCityData = {
-//     'Maharashtra': ['Mumbai', 'Pune', 'Nagpur'],
-//     'Gujarat': ['Mumbai', 'Pune', 'Nagpur'],
-//     'California': ['Los Angeles', 'San Francisco', 'San Diego'],
-//     'Ontario': ['Toronto', 'Ottawa', 'Mississauga'],
-//     'Victoria': ['Melbourne', 'Geelong', 'Ballarat'],
-//     'Bavaria': ['Munich', 'Nuremberg', 'Augsburg'],
-//     // Add more states and cities here
-//   };
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         title: Text('YOUR ADDRESS'),
-//         centerTitle: true,
-//         backgroundColor: Colors.white,
-//         foregroundColor: Colors.black,
-//         elevation: 0,
-//       ),
-//       body: SingleChildScrollView(
-//         child: Padding(
-//           padding: EdgeInsets.all(20), // Equal padding from all sides
-//           child:
-//               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-//             // Buttons
-//             GestureDetector(
-//               onTap: () {
-//                 print("Add A New Address clicked");
-//                 setState(() {
-//                   istap = true;
-//                 });
-//               },
-//               child: Container(
-//                 width: double.infinity,
-//                 padding: EdgeInsets.symmetric(vertical: 20),
-//                 decoration: BoxDecoration(
-//                   color: Colors.grey,
-//                   borderRadius: BorderRadius.circular(30),
-//                 ),
-//                 child: Center(
-//                   child: Text(
-//                     "Add A New Address",
-//                     style: TextStyle(
-//                       fontSize: 16,
-//                       fontWeight: FontWeight.bold,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             SizedBox(height: 20), // Spacing between buttons
-//             GestureDetector(
-//               onTap: () {
-//                 print("Return To Orders clicked");
-//               },
-//               child: Container(
-//                 width: double.infinity,
-//                 padding: EdgeInsets.symmetric(vertical: 20),
-//                 decoration: BoxDecoration(
-//                   color: Colors.grey,
-//                   borderRadius: BorderRadius.circular(30),
-//                 ),
-//                 child: Center(
-//                   child: Text(
-//                     "Return To Orders",
-//                     style: TextStyle(
-//                       fontSize: 16,
-//                       fontWeight: FontWeight.bold,
-//                       color: Colors.black,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//             SizedBox(height: 30), // Space between buttons and form
-
-//             // Form
-//             if (istap) ...[
-//               Text(
-//                 "Add a New Address",
-//                 style: TextStyle(
-//                   fontSize: 18,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//               // SizedBox(height: 20),
-//               // buildTextField("First Name"),
-//               // SizedBox(height: 16),
-//               // buildTextField("Last Name"),
-//               // SizedBox(height: 16),
-//               // buildTextField("Company"),
-//               SizedBox(height: 16),
-//               buildTextField("Address1"),
-//               SizedBox(height: 16),
-//               buildTextField("Address2"),
-//               SizedBox(height: 16),
-//               Text(
-//                 "COUNTRY",
-//                 style: TextStyle(
-//                   fontSize: 14,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//               SizedBox(height: 8),
-//               DropdownButtonFormField<String>(
-//                 decoration: InputDecoration(
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(30),
-//                   ),
-//                   contentPadding: EdgeInsets.symmetric(horizontal: 10),
-//                 ),
-//                 value: selectedCountry,
-//                 hint: Text("Select Country"),
-//                 onChanged: (value) {
-//                   setState(() {
-//                     selectedCountry = value;
-//                     selectedState = null; // Reset state
-//                     selectedCity = null; // Reset city
-//                   });
-//                 },
-//                 items: countryStateData.keys
-//                     .map((country) => DropdownMenuItem<String>(
-//                           value: country,
-//                           child: Text(country),
-//                         ))
-//                     .toList(), // Explicitly cast to List<DropdownMenuItem<String>>
-//               ),
-
-//               SizedBox(height: 16),
-
-//               // State Dropdown
-//               Text(
-//                 "STATE",
-//                 style: TextStyle(
-//                   fontSize: 14,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//               SizedBox(height: 8),
-//               DropdownButtonFormField<String>(
-//                 decoration: InputDecoration(
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(30),
-//                   ),
-//                   contentPadding: EdgeInsets.symmetric(horizontal: 10),
-//                 ),
-//                 value: selectedState,
-//                 hint: Text("Select State"),
-//                 onChanged: selectedCountry == null
-//                     ? null
-//                     : (value) {
-//                         setState(() {
-//                           selectedState = value;
-//                           selectedCity = null; // Reset city
-//                         });
-//                       },
-//                 items: (selectedCountry == null
-//                         ? []
-//                         : countryStateData[selectedCountry] ?? [])
-//                     .map((state) => DropdownMenuItem<String>(
-//                           value: state,
-//                           child: Text(state),
-//                         ))
-//                     .toList(), // Explicitly cast to List<DropdownMenuItem<String>>
-//               ),
-//               SizedBox(height: 16),
-
-//               // City Dropdown
-//               Text(
-//                 "CITY",
-//                 style: TextStyle(
-//                   fontSize: 14,
-//                   fontWeight: FontWeight.bold,
-//                 ),
-//               ),
-//               SizedBox(height: 8),
-//               DropdownButtonFormField<String>(
-//                 decoration: InputDecoration(
-//                   border: OutlineInputBorder(
-//                     borderRadius: BorderRadius.circular(30),
-//                   ),
-//                   contentPadding: EdgeInsets.symmetric(horizontal: 10),
-//                 ),
-//                 value: selectedCity,
-//                 hint: Text("Select City"),
-//                 onChanged: selectedState == null
-//                     ? null
-//                     : (value) {
-//                         setState(() {
-//                           selectedCity = value;
-//                         });
-//                       },
-//                 items: (selectedState == null
-//                         ? []
-//                         : stateCityData[selectedState] ?? [])
-//                     .map((city) => DropdownMenuItem<String>(
-//                           value: city,
-//                           child: Text(city),
-//                         ))
-//                     .toList(), // Explicitly cast to List<DropdownMenuItem<String>>
-//               ),
-//               SizedBox(height: 16),
-//               buildTextField("postal/zip code"),
-//               SizedBox(height: 16),
-//               buildTextField("mobile number"),
-//             ],
-//           ]),
-//         ),
-//       ),
-//     );
-//   }
-
-//   // Function to build each TextField
-//   Widget buildTextField(String labelText) {
-//     return Container(
-//         child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           labelText.toUpperCase(),
-//           style: TextStyle(
-//             fontSize: 14,
-//             fontWeight: FontWeight.bold,
-//             color: Colors.black,
-//           ),
-//         ),
-//         SizedBox(height: 8),
-//         TextFormField(
-//           decoration: InputDecoration(
-//             border: OutlineInputBorder(
-//               borderRadius: BorderRadius.circular(30),
-//             ),
-//             contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-//           ),
-//         ),
-//       ],
-//     ));
-//   }
-// }
-
-
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:myapp/Pages/gocolors1.dart';
+import 'package:myapp/Pages/progressindicator.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../models/status.dart';
 
 class Address extends StatefulWidget {
   const Address({super.key});
@@ -286,16 +21,19 @@ class _AddressState extends State<Address> {
   String? selectedState;
   String? selectedCity;
   bool istap = false;
+  String email = '';
+  String mobileNumber = '';
+  String name = '';
+  String dob = '';
+  String mob = '';
+  int id = 0;
+  final TextEditingController address1Controller = TextEditingController();
+  final TextEditingController address2Controller = TextEditingController();
+  final TextEditingController postalCodeController = TextEditingController();
+  final TextEditingController mobileNumberController = TextEditingController();
 
   // Sample data for default addresses
-  final List<Map<String, String>> defaultAddresses = [
-    {
-      'name': 'Shiva',
-      'address':
-          'Room No 60, Chilalwadi, Jivlapada, Near Shiv Surbhi Bldg, Kandivali East, Mumbai, Maharashtra 400101',
-      'mobile': '7021415955'
-    },
-  ];
+  final List<Map<String, String>> defaultAddresses = [];
 
   // Sample data for countries, states, and cities
   final Map<String, List<String>> countryStateData = {
@@ -305,9 +43,172 @@ class _AddressState extends State<Address> {
   final Map<String, List<String>> stateCityData = {
     'Maharashtra': ['Mumbai', 'Pune', 'Nagpur'],
   };
+  @override
+  void initState() {
+    super.initState();
+
+    // _loadUserData();
+    getaddress();
+  }
+
+  Future<void> _loadUserData() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      email = prefs.getString('email') ?? 'Not Available';
+      mobileNumber = prefs.getString('Mobileno') ?? 'Not Available';
+      name = prefs.getString('firstname') ?? 'Not Available';
+      dob = prefs.getString('dob') ?? 'Not Available';
+      mob = prefs.getString('mobileNo') ?? 'Not Available';
+      id = prefs.getInt('id') ?? 0;
+    });
+  }
+
+  Future<void> deleteAddress(String addressId) async {
+    try {
+      final response = await http.delete(
+        Uri.parse('http://192.168.1.35:5002/api/auth/deleteaddress/$addressId'),
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Address deleted successfully')),
+        );
+
+        // Remove address from the list (update state)
+        setState(() {
+          defaultAddresses.removeWhere((address) => address['id'] == addressId);
+        });
+      } else {
+        final error = json.decode(response.body)['message'] ?? 'Error occurred';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error)),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to delete the address')),
+      );
+    }
+  }
+
+  Future<void> getaddress() async {
+    await _loadUserData();
+    final body = {
+      'userId': id, // Replace with dynamic userId
+    };
+
+    try {
+      final response = await http.get(
+        Uri.parse(
+            'http://192.168.1.35:5002/api/auth/getaddresses/$id'), // Replace with your API URL
+        headers: {'Content-Type': 'application/json'},
+      );
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body);
+        print(data['addresses']);
+        setState(() {
+          defaultAddresses.clear(); // Clear existing addresses
+
+          final List addresses = data['addresses']; // Extract addresses list
+          for (var address in addresses) {
+            defaultAddresses.add({
+              'name': 'User', // Static or modify as per your requirement
+              'address': address['address'], // Extract the "address" key
+              'mobile': address['mobileNumber'].toString(),
+              'postalCode': address['postalCode'].toString(),
+              'country': address['country'].toString(),
+              'state': address['state'].toString(),
+              'city': address['city'].toString(),
+              'id': address['id'].toString(),
+            });
+          }
+        });
+        print(defaultAddresses);
+      } else {
+        final error = json.decode(response.body)['message'] ?? 'Error occurred';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error)),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to retrive address')),
+      );
+    }
+  }
+
+  Future<void> saveAddress() async {
+    final combinedAddress =
+        "${address1Controller.text}, ${address2Controller.text}";
+    final country = selectedCountry;
+    final state = selectedState;
+    final city = selectedCity;
+    final postalCode = postalCodeController.text;
+    final mobileNumber = mobileNumberController.text;
+
+    if (combinedAddress.isEmpty ||
+        country == null ||
+        state == null ||
+        city == null ||
+        postalCode.isEmpty ||
+        mobileNumber.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('All fields are required')),
+      );
+      return;
+    }
+
+    final body = {
+      'userId': id, // Replace with dynamic userId
+      'address': combinedAddress,
+      'country': country,
+      'state': state,
+      'city': city,
+      'postalCode': postalCode,
+      'mobileNumber': mobileNumber,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(
+            'http://192.168.1.35:5002/api/auth/saveaddress'), // Replace with your API URL
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode(body),
+      );
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Address saved successfully')),
+        );
+        setState(() {
+          istap = false;
+          address1Controller.clear();
+          address2Controller.clear();
+          postalCodeController.clear();
+          mobileNumberController.clear();
+          selectedCountry = null;
+          selectedState = null;
+          selectedCity = null;
+          getaddress();
+        }); // Close the bottom sheet
+      } else {
+        final error = json.decode(response.body)['message'] ?? 'Error occurred';
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(error)),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to save address')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final pageStatus = Provider.of<PageStatusProvider>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -319,6 +220,7 @@ class _AddressState extends State<Address> {
       ),
       body: Column(
         children: [
+          StepProgressIndicator(currentStep: pageStatus.currentStep),
           Expanded(
             child: SingleChildScrollView(
               child: Padding(
@@ -327,7 +229,7 @@ class _AddressState extends State<Address> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Display default addresses
-                    if (defaultAddresses.isNotEmpty) ...[
+                    if (!istap && defaultAddresses.isNotEmpty) ...[
                       Text(
                         "DEFAULT ADDRESS",
                         style: TextStyle(
@@ -365,7 +267,7 @@ class _AddressState extends State<Address> {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  address['address']!,
+                                  "${address['address']!},${address['state']!},${address['city']!},${address['country']!}",
                                   style: TextStyle(fontSize: 14),
                                 ),
                                 SizedBox(height: 10),
@@ -387,6 +289,8 @@ class _AddressState extends State<Address> {
                                       onPressed: () {
                                         setState(() {
                                           defaultAddresses.remove(address);
+                                          print(address['id']);
+                                          deleteAddress(address['id']!);
                                         });
                                       },
                                       child: Text('REMOVE'),
@@ -442,9 +346,9 @@ class _AddressState extends State<Address> {
                         ),
                       ),
                       SizedBox(height: 16),
-                      buildTextField("Address1"),
+                      buildTextField("Address1", address1Controller),
                       SizedBox(height: 16),
-                      buildTextField("Address2"),
+                      buildTextField("Address2", address2Controller),
                       SizedBox(height: 16),
                       buildDropdown(
                         label: "COUNTRY",
@@ -486,9 +390,25 @@ class _AddressState extends State<Address> {
                         },
                       ),
                       SizedBox(height: 16),
-                      buildTextField("Postal/Zip Code"),
+                      buildTextField("Postal/Zip Code", postalCodeController),
                       SizedBox(height: 16),
-                      buildTextField("Mobile Number"),
+                      buildTextField("Mobile Number", mobileNumberController),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            saveAddress();
+                          },
+                          child: Text('CONFIRM'),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                          ),
+                        ),
+                      ),
                     ],
                   ],
                 ),
@@ -496,27 +416,42 @@ class _AddressState extends State<Address> {
             ),
           ),
 
-          // Confirm Button
-          Container(
-            padding: EdgeInsets.all(20),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () {
-                print("Confirm clicked");
-              },
-              child: Text('CONFIRM'),
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 15),
-              ),
-            ),
+          ElevatedButton(
+            onPressed: () {
+              Provider.of<PageStatusProvider>(context, listen: false)
+                  .updateStep(3); // Navigate to Address step
+              Navigator.push(
+                context,
+                PageRouteBuilder(
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      Home(),
+                  transitionsBuilder:
+                      (context, animation, secondaryAnimation, child) {
+                    const begin = Offset(1.0, 0.0);
+                    const end = Offset.zero;
+                    const curve = Curves.easeInOut;
+
+                    final tween = Tween(begin: begin, end: end)
+                        .chain(CurveTween(curve: curve));
+                    final offsetAnimation = animation.drive(tween);
+
+                    return SlideTransition(
+                        position: offsetAnimation, child: child);
+                  },
+                ),
+              );
+            },
+            child: const Text('Add Address'),
           ),
+
+          // Confirm Button
         ],
       ),
     );
   }
 
   // Function to build each TextField
-  Widget buildTextField(String labelText) {
+  Widget buildTextField(String labelText, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -530,6 +465,7 @@ class _AddressState extends State<Address> {
         ),
         SizedBox(height: 8),
         TextFormField(
+          controller: controller,
           decoration: InputDecoration(
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),

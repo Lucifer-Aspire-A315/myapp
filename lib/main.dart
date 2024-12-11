@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myapp/Pages/gocolors1.dart';
 import 'package:myapp/models/countmodel.dart';
+import 'package:myapp/models/status.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -9,6 +10,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => PageStatusProvider()),
       ],
       child: MyApp(),
     ),
@@ -30,6 +32,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(canvasColor: Colors.white),
       home: Home(),
+
       // FutureBuilder<bool>(
       //     future: _checkLoginStatus(),
       //     builder: (context, snapshot) {

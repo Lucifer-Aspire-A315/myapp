@@ -9,6 +9,7 @@ import 'package:myapp/Pages/clothing.dart';
 import 'package:myapp/Pages/shoppingcart.dart';
 import 'package:myapp/Pages/wishlist.dart';
 import 'package:myapp/cards/clothingCard.dart';
+import 'package:myapp/cards/drawer.dart';
 import 'package:myapp/cards/shopbycolors.dart';
 import 'package:myapp/models/cloth.dart';
 import 'package:myapp/models/countmodel.dart';
@@ -133,7 +134,7 @@ class _HomeState extends State<Home> {
 
   Future<void> numbers() async {
     await _loadUserData();
-    final url = Uri.parse("http://192.168.1.10:5002/api/auth/counts/$id");
+    final url = Uri.parse("http://192.168.1.35:5002/api/auth/counts/$id");
     try {
       final response = await http.get(url);
 
@@ -163,7 +164,7 @@ class _HomeState extends State<Home> {
 
   Future<void> fetchitems(String query) async {
     final url =
-        Uri.parse("http://192.168.1.10:5002/api/auth/items?search=$query");
+        Uri.parse("http://192.168.1.35:5002/api/auth/items?search=$query");
     try {
       final response = await http.get(url);
 
@@ -207,6 +208,7 @@ class _HomeState extends State<Home> {
             "assets/images/logo.webp",
             width: 150,
           ),
+
           // const Text('GO COLORS!', style: TextStyle(color: Colors.black)),
           backgroundColor: Colors.white,
           elevation: 0,
@@ -357,6 +359,7 @@ class _HomeState extends State<Home> {
             ),
           ],
         ),
+        drawer: CustomDrawer(),
         body: SingleChildScrollView(
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
