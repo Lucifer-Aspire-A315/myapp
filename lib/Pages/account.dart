@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:myapp/Pages/address.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAccountPage extends StatefulWidget {
@@ -102,7 +103,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.1.35:5002/api/auth/saveaddress'), // Replace with your API URL
+            'http://192.168.1.10:5002/api/auth/saveaddress'), // Replace with your API URL
         headers: {'Content-Type': 'application/json'},
         body: json.encode(body),
       );
@@ -267,223 +268,223 @@ class _MyAccountPageState extends State<MyAccountPage> {
                   GestureDetector(
                     onTap: () {
                       // Action for "ADD A NEW ADDRESS"
-                      // Navigator.push(context,
+                      Navigator.push(context,
 
-                      //     MaterialPageRoute(builder: (context) => Address()));
-                      showMaterialModalBottomSheet(
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(20),
-                            // bottom: Radius.circular(20) // Rounded top corners
-                          ),
-                        ),
-                        enableDrag: true,
-                        closeProgressThreshold: 0.6,
-                        bounce: true,
-                        context: context,
-                        builder: (context) => StatefulBuilder(
-                          builder: (BuildContext context,
-                              StateSetter setModalState) {
-                            return SingleChildScrollView(
-                              controller: ModalScrollController.of(context),
-                              child: Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
-                                padding: EdgeInsets.all(
-                                    30), // Apply consistent padding
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(
-                                        20), // Rounded top corners
-                                  ),
-                                ),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      // Title
-                                      Center(
-                                        child: Text(
-                                          "Add a New Address",
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16),
-                                      buildTextField(
-                                          "Address1", address1Controller),
-                                      SizedBox(height: 16),
-                                      buildTextField(
-                                          "Address2", address2Controller),
-                                      SizedBox(height: 16),
-                                      Text(
-                                        "COUNTRY",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(height: 8),
-                                      DropdownButtonFormField<String>(
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                        ),
-                                        value: selectedCountry,
-                                        hint: Text("Select Country"),
-                                        onChanged: (value) {
-                                          setModalState(() {
-                                            selectedCountry = value;
-                                            selectedState = null; // Reset state
-                                            selectedCity = null; // Reset city
-                                          });
-                                        },
-                                        items: countryStateData.keys
-                                            .map((country) =>
-                                                DropdownMenuItem<String>(
-                                                  value: country,
-                                                  child: Text(country),
-                                                ))
-                                            .toList(),
-                                      ),
-                                      SizedBox(height: 16),
+                          MaterialPageRoute(builder: (context) => Address()));
+                      // showMaterialModalBottomSheet(
+                      //   shape: const RoundedRectangleBorder(
+                      //     borderRadius: BorderRadius.vertical(
+                      //       top: Radius.circular(20),
+                      //       // bottom: Radius.circular(20) // Rounded top corners
+                      //     ),
+                      //   ),
+                      //   enableDrag: true,
+                      //   closeProgressThreshold: 0.6,
+                      //   bounce: true,
+                      //   context: context,
+                      //   builder: (context) => StatefulBuilder(
+                      //     builder: (BuildContext context,
+                      //         StateSetter setModalState) {
+                      //       return SingleChildScrollView(
+                      //         controller: ModalScrollController.of(context),
+                      //         child: Container(
+                      //           height:
+                      //               MediaQuery.of(context).size.height * 0.5,
+                      //           padding: EdgeInsets.all(
+                      //               30), // Apply consistent padding
+                      //           decoration: BoxDecoration(
+                      //             color: Colors.white,
+                      //             borderRadius: BorderRadius.vertical(
+                      //               top: Radius.circular(
+                      //                   20), // Rounded top corners
+                      //             ),
+                      //           ),
+                      //           child: SingleChildScrollView(
+                      //             child: Column(
+                      //               crossAxisAlignment:
+                      //                   CrossAxisAlignment.start,
+                      //               mainAxisSize: MainAxisSize.min,
+                      //               children: [
+                      //                 // Title
+                      //                 Center(
+                      //                   child: Text(
+                      //                     "Add a New Address",
+                      //                     style: TextStyle(
+                      //                       fontSize: 18,
+                      //                       fontWeight: FontWeight.bold,
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //                 SizedBox(height: 16),
+                      //                 buildTextField(
+                      //                     "Address1", address1Controller),
+                      //                 SizedBox(height: 16),
+                      //                 buildTextField(
+                      //                     "Address2", address2Controller),
+                      //                 SizedBox(height: 16),
+                      //                 Text(
+                      //                   "COUNTRY",
+                      //                   style: TextStyle(
+                      //                     fontSize: 14,
+                      //                     fontWeight: FontWeight.bold,
+                      //                   ),
+                      //                 ),
+                      //                 SizedBox(height: 8),
+                      //                 DropdownButtonFormField<String>(
+                      //                   decoration: InputDecoration(
+                      //                     border: OutlineInputBorder(
+                      //                       borderRadius:
+                      //                           BorderRadius.circular(30),
+                      //                     ),
+                      //                     contentPadding: EdgeInsets.symmetric(
+                      //                         horizontal: 10),
+                      //                   ),
+                      //                   value: selectedCountry,
+                      //                   hint: Text("Select Country"),
+                      //                   onChanged: (value) {
+                      //                     setModalState(() {
+                      //                       selectedCountry = value;
+                      //                       selectedState = null; // Reset state
+                      //                       selectedCity = null; // Reset city
+                      //                     });
+                      //                   },
+                      //                   items: countryStateData.keys
+                      //                       .map((country) =>
+                      //                           DropdownMenuItem<String>(
+                      //                             value: country,
+                      //                             child: Text(country),
+                      //                           ))
+                      //                       .toList(),
+                      //                 ),
+                      //                 SizedBox(height: 16),
 
-                                      // State Dropdown
-                                      Text(
-                                        "STATE",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(height: 8),
-                                      DropdownButtonFormField<String>(
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                        ),
-                                        value: selectedState,
-                                        hint: Text("Select State"),
-                                        onChanged: selectedCountry == null
-                                            ? null
-                                            : (value) {
-                                                setModalState(() {
-                                                  selectedState = value;
-                                                  selectedCity =
-                                                      null; // Reset city
-                                                });
-                                              },
-                                        items: (selectedCountry == null
-                                                ? []
-                                                : countryStateData[
-                                                        selectedCountry] ??
-                                                    [])
-                                            .map((state) =>
-                                                DropdownMenuItem<String>(
-                                                  value: state,
-                                                  child: Text(state),
-                                                ))
-                                            .toList(),
-                                      ),
-                                      SizedBox(height: 16),
+                      //                 // State Dropdown
+                      //                 Text(
+                      //                   "STATE",
+                      //                   style: TextStyle(
+                      //                     fontSize: 14,
+                      //                     fontWeight: FontWeight.bold,
+                      //                   ),
+                      //                 ),
+                      //                 SizedBox(height: 8),
+                      //                 DropdownButtonFormField<String>(
+                      //                   decoration: InputDecoration(
+                      //                     border: OutlineInputBorder(
+                      //                       borderRadius:
+                      //                           BorderRadius.circular(30),
+                      //                     ),
+                      //                     contentPadding: EdgeInsets.symmetric(
+                      //                         horizontal: 10),
+                      //                   ),
+                      //                   value: selectedState,
+                      //                   hint: Text("Select State"),
+                      //                   onChanged: selectedCountry == null
+                      //                       ? null
+                      //                       : (value) {
+                      //                           setModalState(() {
+                      //                             selectedState = value;
+                      //                             selectedCity =
+                      //                                 null; // Reset city
+                      //                           });
+                      //                         },
+                      //                   items: (selectedCountry == null
+                      //                           ? []
+                      //                           : countryStateData[
+                      //                                   selectedCountry] ??
+                      //                               [])
+                      //                       .map((state) =>
+                      //                           DropdownMenuItem<String>(
+                      //                             value: state,
+                      //                             child: Text(state),
+                      //                           ))
+                      //                       .toList(),
+                      //                 ),
+                      //                 SizedBox(height: 16),
 
-                                      // City Dropdown
-                                      Text(
-                                        "CITY",
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      SizedBox(height: 8),
-                                      DropdownButtonFormField<String>(
-                                        decoration: InputDecoration(
-                                          border: OutlineInputBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                          ),
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                        ),
-                                        value: selectedCity,
-                                        hint: Text("Select City"),
-                                        onChanged: selectedState == null
-                                            ? null
-                                            : (value) {
-                                                setModalState(() {
-                                                  selectedCity = value;
-                                                });
-                                              },
-                                        items: (selectedState == null
-                                                ? []
-                                                : stateCityData[
-                                                        selectedState] ??
-                                                    [])
-                                            .map((city) =>
-                                                DropdownMenuItem<String>(
-                                                  value: city,
-                                                  child: Text(city),
-                                                ))
-                                            .toList(),
-                                      ),
-                                      SizedBox(height: 16),
-                                      buildTextField("postal/zip code",
-                                          postalCodeController),
-                                      SizedBox(height: 16),
-                                      buildTextField("mobile number",
-                                          mobileNumberController),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
+                      //                 // City Dropdown
+                      //                 Text(
+                      //                   "CITY",
+                      //                   style: TextStyle(
+                      //                     fontSize: 14,
+                      //                     fontWeight: FontWeight.bold,
+                      //                   ),
+                      //                 ),
+                      //                 SizedBox(height: 8),
+                      //                 DropdownButtonFormField<String>(
+                      //                   decoration: InputDecoration(
+                      //                     border: OutlineInputBorder(
+                      //                       borderRadius:
+                      //                           BorderRadius.circular(30),
+                      //                     ),
+                      //                     contentPadding: EdgeInsets.symmetric(
+                      //                         horizontal: 10),
+                      //                   ),
+                      //                   value: selectedCity,
+                      //                   hint: Text("Select City"),
+                      //                   onChanged: selectedState == null
+                      //                       ? null
+                      //                       : (value) {
+                      //                           setModalState(() {
+                      //                             selectedCity = value;
+                      //                           });
+                      //                         },
+                      //                   items: (selectedState == null
+                      //                           ? []
+                      //                           : stateCityData[
+                      //                                   selectedState] ??
+                      //                               [])
+                      //                       .map((city) =>
+                      //                           DropdownMenuItem<String>(
+                      //                             value: city,
+                      //                             child: Text(city),
+                      //                           ))
+                      //                       .toList(),
+                      //                 ),
+                      //                 SizedBox(height: 16),
+                      //                 buildTextField("postal/zip code",
+                      //                     postalCodeController),
+                      //                 SizedBox(height: 16),
+                      //                 buildTextField("mobile number",
+                      //                     mobileNumberController),
+                      //                 SizedBox(
+                      //                   height: 16,
+                      //                 ),
 
-                                      // Save Button
-                                      Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            // Handle save address action
-                                            print("Address Saved");
-                                            saveAddress();
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 30, vertical: 15),
-                                            backgroundColor: Colors.black,
-                                          ),
-                                          child: Text(
-                                            "Save Address",
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
+                      //                 // Save Button
+                      //                 Center(
+                      //                   child: ElevatedButton(
+                      //                     onPressed: () {
+                      //                       // Handle save address action
+                      //                       print("Address Saved");
+                      //                       saveAddress();
+                      //                     },
+                      //                     style: ElevatedButton.styleFrom(
+                      //                       shape: RoundedRectangleBorder(
+                      //                         borderRadius:
+                      //                             BorderRadius.circular(30),
+                      //                       ),
+                      //                       padding: EdgeInsets.symmetric(
+                      //                           horizontal: 30, vertical: 15),
+                      //                       backgroundColor: Colors.black,
+                      //                     ),
+                      //                     child: Text(
+                      //                       "Save Address",
+                      //                       style: TextStyle(
+                      //                         color: Colors.white,
+                      //                         fontSize: 16,
+                      //                         fontWeight: FontWeight.bold,
+                      //                       ),
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ],
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // );
                     },
                     child: Container(
                       padding:
