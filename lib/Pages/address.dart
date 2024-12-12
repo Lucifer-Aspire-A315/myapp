@@ -51,6 +51,15 @@ class _AddressState extends State<Address> {
     getaddress();
   }
 
+  @override
+  void dispose() {
+    address1Controller.dispose();
+    address2Controller.dispose();
+    postalCodeController.dispose();
+    mobileNumberController.dispose();
+    super.dispose();
+  }
+
   Future<void> _loadUserData() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
@@ -63,79 +72,86 @@ class _AddressState extends State<Address> {
     });
   }
 
+  bool isLoading = false;
+
   Future<void> deleteAddress(String addressId) async {
+    setState(() => isLoading = true);
     try {
       final response = await http.delete(
-        Uri.parse('http://192.168.1.35:5002/api/auth/deleteaddress/$addressId'),
+        Uri.parse('http://192.168.1.10:5002/api/auth/deleteaddress/$addressId'),
         headers: {'Content-Type': 'application/json'},
       );
-
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Address deleted successfully')),
-        );
-
-        // Remove address from the list (update state)
-        setState(() {
-          defaultAddresses.removeWhere((address) => address['id'] == addressId);
-        });
+        if (mounted) {
+          setState(() {
+            defaultAddresses
+                .removeWhere((address) => address['id'] == addressId);
+            isLoading = false;
+          });
+        }
       } else {
-        final error = json.decode(response.body)['message'] ?? 'Error occurred';
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error)),
-        );
+        if (mounted) {
+          setState(() => isLoading = false);
+          final error =
+              json.decode(response.body)['message'] ?? 'Error occurred';
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(error)),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to delete the address')),
-      );
+      if (mounted) {
+        setState(() => isLoading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to delete the address')),
+        );
+      }
     }
   }
 
   Future<void> getaddress() async {
     await _loadUserData();
-    final body = {
-      'userId': id, // Replace with dynamic userId
-    };
-
     try {
       final response = await http.get(
-        Uri.parse(
-            'http://192.168.1.35:5002/api/auth/getaddresses/$id'), // Replace with your API URL
+        Uri.parse('http://192.168.1.10:5002/api/auth/getaddresses/$id'),
         headers: {'Content-Type': 'application/json'},
       );
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body);
-        print(data['addresses']);
-        setState(() {
-          defaultAddresses.clear(); // Clear existing addresses
-
-          final List addresses = data['addresses']; // Extract addresses list
-          for (var address in addresses) {
-            defaultAddresses.add({
-              'name': 'User', // Static or modify as per your requirement
-              'address': address['address'], // Extract the "address" key
-              'mobile': address['mobileNumber'].toString(),
-              'postalCode': address['postalCode'].toString(),
-              'country': address['country'].toString(),
-              'state': address['state'].toString(),
-              'city': address['city'].toString(),
-              'id': address['id'].toString(),
-            });
-          }
-        });
-        print(defaultAddresses);
+        if (mounted) {
+          setState(() {
+            defaultAddresses.clear();
+            final List addresses = data['addresses'];
+            for (var address in addresses) {
+              defaultAddresses.add({
+                'name': 'User',
+                'address': address['address'],
+                'mobile': address['mobileNumber'].toString(),
+                'postalCode': address['postalCode'].toString(),
+                'country': address['country'].toString(),
+                'state': address['state'].toString(),
+                'city': address['city'].toString(),
+                'id': address['id'].toString(),
+              });
+            }
+          });
+        }
       } else {
-        final error = json.decode(response.body)['message'] ?? 'Error occurred';
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error)),
-        );
+        if (mounted) {
+          final error =
+              json.decode(response.body)['message'] ?? 'Error occurred';
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(error)),
+          );
+        }
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to retrive address')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to retrieve address')),
+        );
+      }
     }
   }
 
@@ -173,36 +189,45 @@ class _AddressState extends State<Address> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.1.35:5002/api/auth/saveaddress'), // Replace with your API URL
+            'http://192.168.1.10:5002/api/auth/saveaddress'), // Replace with your API URL
         headers: {'Content-Type': 'application/json'},
         body: json.encode(body),
       );
 
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Address saved successfully')),
-        );
-        setState(() {
-          istap = false;
-          address1Controller.clear();
-          address2Controller.clear();
-          postalCodeController.clear();
-          mobileNumberController.clear();
-          selectedCountry = null;
-          selectedState = null;
-          selectedCity = null;
-          getaddress();
-        }); // Close the bottom sheet
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Address saved successfully')),
+          );
+          setState(() {
+            istap = false;
+            address1Controller.clear();
+            address2Controller.clear();
+            postalCodeController.clear();
+            mobileNumberController.clear();
+            selectedCountry = null;
+            selectedState = null;
+            selectedCity = null;
+            getaddress();
+          }); // Close the bottom sheet
+        }
       } else {
-        final error = json.decode(response.body)['message'] ?? 'Error occurred';
+        if (mounted) {
+           final error = json.decode(response.body)['message'] ?? 'Error occurred';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(error)),
         );
+          
+        }
+       
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to save address')),
       );
+      }
+      
     }
   }
 
