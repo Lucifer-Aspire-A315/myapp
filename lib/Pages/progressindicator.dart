@@ -1,9 +1,38 @@
 import 'package:flutter/material.dart';
 
-class StepProgressIndicator extends StatelessWidget {
+class StepProgressIndicator extends StatefulWidget {
   final int currentStep;
 
   const StepProgressIndicator({required this.currentStep});
+
+  @override
+  _StepProgressIndicatorState createState() => _StepProgressIndicatorState();
+}
+
+class _StepProgressIndicatorState extends State<StepProgressIndicator> {
+  late List<bool> isLineAnimated;
+
+  @override
+  void initState() {
+    super.initState();
+    // Initialize animation state for each line
+    isLineAnimated = List.generate(2, (index) => false); // 2 lines for 3 steps
+  }
+
+  @override
+  void didUpdateWidget(covariant StepProgressIndicator oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.currentStep > oldWidget.currentStep) {
+      if (widget.currentStep - 2 >= 0 &&
+          widget.currentStep - 2 < isLineAnimated.length) {
+        setState(() {
+          isLineAnimated[widget.currentStep - 2] = true;
+          print("Animating line for step: ${widget.currentStep - 2}");
+        });
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,19 +43,19 @@ class StepProgressIndicator extends StatelessWidget {
         children: [
           buildStep(
             title: 'Cart',
-            isActive: currentStep >= 1,
-            isCompleted: currentStep > 1,
+            isActive: widget.currentStep >= 1,
+            isCompleted: widget.currentStep > 1,
           ),
-          buildLine(isActive: currentStep >= 2),
+          buildLine(isActive: widget.currentStep >= 2, lineIndex: 0),
           buildStep(
             title: 'Address',
-            isActive: currentStep >= 2,
-            isCompleted: currentStep > 2,
+            isActive: widget.currentStep >= 2,
+            isCompleted: widget.currentStep > 2,
           ),
-          buildLine(isActive: currentStep == 3),
+          buildLine(isActive: widget.currentStep >= 3, lineIndex: 1),
           buildStep(
             title: 'Payment',
-            isActive: currentStep == 3,
+            isActive: widget.currentStep == 3,
             isCompleted: false,
           ),
         ],
@@ -41,11 +70,16 @@ class StepProgressIndicator extends StatelessWidget {
   }) {
     return Column(
       children: [
+        SizedBox(
+          height: 15,
+        ),
         CircleAvatar(
           radius: 10,
           backgroundColor: isCompleted
               ? Colors.green
-              : (isActive ? Colors.teal : Colors.grey),
+              : (isActive
+                  ? const Color.fromARGB(255, 241, 54, 7)
+                  : Colors.grey),
           child: isCompleted
               ? Icon(Icons.check, size: 16, color: Colors.white)
               : CircleAvatar(
@@ -65,11 +99,31 @@ class StepProgressIndicator extends StatelessWidget {
     );
   }
 
-  Widget buildLine({required bool isActive}) {
+  Widget buildLine({required bool isActive, required int lineIndex}) {
     return Expanded(
-      child: Container(
-        height: 2,
-        color: isActive ? Colors.teal : Colors.grey[300],
+      child: TweenAnimationBuilder<double>(
+        tween: Tween<double>(
+          begin: 0,
+          end: isLineAnimated[lineIndex]
+              ? 1
+              : 0, // Animate only for the correct line
+        ),
+        duration: Duration(seconds: 1),
+        curve: Curves.easeInOut,
+        builder: (context, value, child) {
+          return Container(
+            height: 2,
+            color: Colors.grey[300],
+            child: FractionallySizedBox(
+              alignment: Alignment.centerLeft,
+              widthFactor: value,
+              child: Container(
+                height: 2,
+                color: const Color.fromARGB(255, 3, 253, 228),
+              ),
+            ),
+          );
+        },
       ),
     );
   }

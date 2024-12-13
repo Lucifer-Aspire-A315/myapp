@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:myapp/Pages/gocolors1.dart';
+import 'package:myapp/Pages/payment.dart';
 import 'package:myapp/Pages/progressindicator.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,6 +27,7 @@ class _AddressState extends State<Address> {
   String dob = '';
   String mob = '';
   int id = 0;
+  bool? isaddress = false;
   final TextEditingController address1Controller = TextEditingController();
   final TextEditingController address2Controller = TextEditingController();
   final TextEditingController postalCodeController = TextEditingController();
@@ -78,7 +79,7 @@ class _AddressState extends State<Address> {
     setState(() => isLoading = true);
     try {
       final response = await http.delete(
-        Uri.parse('http://192.168.1.10:5002/api/auth/deleteaddress/$addressId'),
+        Uri.parse('http://192.168.1.35:5002/api/auth/deleteaddress/$addressId'),
         headers: {'Content-Type': 'application/json'},
       );
       if (response.statusCode == 200) {
@@ -113,7 +114,7 @@ class _AddressState extends State<Address> {
     await _loadUserData();
     try {
       final response = await http.get(
-        Uri.parse('http://192.168.1.10:5002/api/auth/getaddresses/$id'),
+        Uri.parse('http://192.168.1.35:5002/api/auth/getaddresses/$id'),
         headers: {'Content-Type': 'application/json'},
       );
 
@@ -136,6 +137,7 @@ class _AddressState extends State<Address> {
               });
             }
           });
+          print(defaultAddresses);
         }
       } else {
         if (mounted) {
@@ -189,7 +191,7 @@ class _AddressState extends State<Address> {
     try {
       final response = await http.post(
         Uri.parse(
-            'http://192.168.1.10:5002/api/auth/saveaddress'), // Replace with your API URL
+            'http://192.168.1.35:5002/api/auth/saveaddress'), // Replace with your API URL
         headers: {'Content-Type': 'application/json'},
         body: json.encode(body),
       );
@@ -208,26 +210,25 @@ class _AddressState extends State<Address> {
             selectedCountry = null;
             selectedState = null;
             selectedCity = null;
+            isaddress = true;
             getaddress();
           }); // Close the bottom sheet
         }
       } else {
         if (mounted) {
-           final error = json.decode(response.body)['message'] ?? 'Error occurred';
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(error)),
-        );
-          
+          final error =
+              json.decode(response.body)['message'] ?? 'Error occurred';
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(error)),
+          );
         }
-       
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to save address')),
-      );
+          SnackBar(content: Text('Failed to save address')),
+        );
       }
-      
     }
   }
 
@@ -242,6 +243,15 @@ class _AddressState extends State<Address> {
         backgroundColor: Colors.white,
         foregroundColor: Colors.black,
         elevation: 0,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            // Decrement step and navigate back
+            Provider.of<PageStatusProvider>(context, listen: false)
+                .updateStep(1); // Decrement step by 1
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Column(
         children: [
@@ -440,43 +450,48 @@ class _AddressState extends State<Address> {
               ),
             ),
           ),
-
-          ElevatedButton(
-            onPressed: () {
-              Provider.of<PageStatusProvider>(context, listen: false)
-                  .updateStep(3); // Navigate to Address step
-              Navigator.push(
-                context,
-                PageRouteBuilder(
-                  pageBuilder: (context, animation, secondaryAnimation) =>
-                      Home(),
-                  transitionsBuilder:
-                      (context, animation, secondaryAnimation, child) {
-                    const begin = Offset(1.0, 0.0);
-                    const end = Offset.zero;
-                    const curve = Curves.easeInOut;
-
-                    final tween = Tween(begin: begin, end: end)
-                        .chain(CurveTween(curve: curve));
-                    final offsetAnimation = animation.drive(tween);
-
-                    return SlideTransition(
-                        position: offsetAnimation, child: child);
-                  },
-                ),
-              );
-            },
-            child: const Text('Add Address'),
-          ),
-
-          // Confirm Button
         ],
+      ),
+      floatingActionButtonLocation:
+          FloatingActionButtonLocation.miniCenterFloat,
+      floatingActionButton: ElevatedButton(
+        onPressed: () {
+          if (isaddress == true || defaultAddresses.length > 0) {
+            Provider.of<PageStatusProvider>(context, listen: false)
+                .updateStep(3); // Navigate to Address step
+            Navigator.push(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation, secondaryAnimation) =>
+                    Payment(),
+                transitionsBuilder:
+                    (context, animation, secondaryAnimation, child) {
+                  const begin = Offset(1.0, 0.0);
+                  const end = Offset.zero;
+                  const curve = Curves.easeInOut;
+
+                  final tween = Tween(begin: begin, end: end)
+                      .chain(CurveTween(curve: curve));
+                  final offsetAnimation = animation.drive(tween);
+
+                  return SlideTransition(
+                      position: offsetAnimation, child: child);
+                },
+              ),
+            );
+          }
+          ;
+        },
+        child: const Text('Continue Payment'),
       ),
     );
   }
 
   // Function to build each TextField
-  Widget buildTextField(String labelText, TextEditingController controller) {
+  Widget buildTextField(
+    String labelText,
+    TextEditingController controller,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
